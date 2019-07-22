@@ -1,15 +1,19 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">
-        Home
-      </router-link> |
-      <router-link to="/about">
-        About
-      </router-link>
+    <div id="app">
+        <div id="nav">
+            <router-link to="/">
+                Generate Your Taste
+            </router-link> |
+            <router-link to="/about">
+                How it Works
+            </router-link> |
+            <router-link to="/contact">
+                Get in Touch
+            </router-link> |
+            <a href="https://github.com/MichaelDarr/MuCritic-2.0">Source Code</a>
+        </div>
+        <router-view />
     </div>
-    <router-view />
-  </div>
 </template>
 
 <style>
@@ -26,7 +30,7 @@
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #2c3e50;;
 }
 
 #nav a.router-link-exact-active {

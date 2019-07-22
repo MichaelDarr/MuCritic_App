@@ -1,37 +1,36 @@
 <template>
-    <div class="hello">
-        <h1><i>μ</i>Critic</h1>
-        <a :href="authUrl">Log in with Spotify</a>
+    <div>
+        <h1>
+            <i>μ</i>Critic
+        </h1>
+        <h2 class="subheadding">
+            <span class="sub-1">
+                learning your music taste with
+            </span>
+            <br>
+            <span class="sub-2">
+                deep neural networks
+            </span>
+        </h2>
     </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
-
-@Component
-export default class Greeting extends Vue {
-    get authUrl(): string {
-        return this.$store.getters['spotifyToken/authUrl'];
-    }
-}
-</script>
-
 <style scoped>
 h1 {
-    font-size: 6em;
+    font-size: 7em;
+    margin: 0.5em 0 0 0;
 }
 i {
     color: #207bbf;
 }
-a {
-    background: #1DB954;
-    color: #fff;
-    border-radius: 50px;
-    font-size: .875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    padding: 13px 45px 12px 45px;
-    text-decoration: none;
+.subheadding {
+    color: #2c3e50;
+    margin: 1em 0 5em 0;
+}
+.sub-1 {
+    font-size: 0.9em;
+}
+.sub-2 {
+    font-size: 1.4em;
 }
 </style>

@@ -1,6 +1,7 @@
 export interface SpotifyToken {
     accessToken: string;
-    expiresIn: number;
+    expiresAt: number;
+    receivedAt: number;
     tokenType: 'Bearer';
 }
 

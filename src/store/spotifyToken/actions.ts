@@ -45,9 +45,11 @@ export const actions: ActionTree<SpotifyTokenState, RootState> = {
             } else if(expiresIn == null || expiresIn === 0) {
                 throw new Error('failed to retrieve access token expiration');
             }
+            const unixTimestamp = Date.now();
             const spotifyToken: SpotifyToken = {
                 accessToken,
-                expiresIn,
+                receivedAt: unixTimestamp,
+                expiresAt: unixTimestamp + expiresIn,
                 tokenType: 'Bearer',
             };
             commit('setToken', spotifyToken);

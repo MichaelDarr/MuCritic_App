@@ -14,6 +14,9 @@ const store: StoreOptions<RootState> = {
         errorLog: [],
         miscLog: [],
     },
+    modules: {
+        spotifyToken,
+    },
     mutations: {
         logError(state, payload: Log): void {
             state.errorLog.push(payload);
@@ -21,9 +24,6 @@ const store: StoreOptions<RootState> = {
         logMisc(state, payload: Log): void {
             state.miscLog.push(payload);
         },
-    },
-    modules: {
-        spotifyToken,
     },
 };
 
