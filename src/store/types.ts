@@ -1,8 +1,9 @@
-export interface VuexError {
+export interface Log {
     location: string;
-    error: string;
+    message: string;
 }
 
 export interface RootState {
-    errors: VuexError[];
+    errorLog: Log[];
+    miscLog: Log[];
 }

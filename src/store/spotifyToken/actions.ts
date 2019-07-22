@@ -33,9 +33,10 @@ export const actions: ActionTree<SpotifyTokenState, RootState> = {
                             }
                             break;
                         default:
-                            console.log(
-                                `unexpected parameter receieved:\n${pLabel}: ${pVal}`,
-                            );
+                            commit('miscLog', {
+                                location: 'Spotify token retrieval',
+                                message: `unexpected parameter receieved:\n${pLabel}: ${pVal}`,
+                            });
                     }
                 }
             });
@@ -52,8 +53,8 @@ export const actions: ActionTree<SpotifyTokenState, RootState> = {
             commit('setToken', spotifyToken);
         } catch(err) {
             commit('logError', {
-                location: 'Spotify API access token retrieval',
-                error: err,
+                location: 'Spotify token retrieval',
+                message: err,
             });
         }
     },
