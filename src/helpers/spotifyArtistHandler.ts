@@ -3,9 +3,10 @@ import * as Spotify from 'spotify';
 import { SpotifyApi } from './spotifyApi';
 import {
     ArtistAggregation,
+    EncodedArtist,
     EncodedTrack,
-    Encoder,
-} from './encoder';
+    Encode,
+} from './encode';
 
 /**
  * Spotify Track Scraper implementing a CSV writer and optional encoding via tensorflow models
@@ -13,7 +14,9 @@ import {
 export class SpotifyArtistHandler {
     public artistPopularity: number;
 
-    public encodedArtist: ArtistAggregation | undefined;
+    public artistAggregation: ArtistAggregation | undefined;
+
+    public encodedArtist: EncodedArtist | undefined;
 
     public encodedTracks: EncodedTrack[];
 
@@ -41,8 +44,13 @@ export class SpotifyArtistHandler {
     }
 
     public async encodeArtist(): Promise<void> {
+        if(this.artistAggregation == null) throw new Error('Cannot encode null artist');
+        this.encodedArtist = await Encode.artist(this.artistAggregation);
+    }
+
+    public async encodeTrackSequence(): Promise<void> {
         if(this.encodedTracks.length !== 5) throw new Error(`track sequence encoder found ${this.encodedTracks.length} tracks (should be 5)`);
-        this.encodedArtist = await Encoder.encodeTrackSequence(
+        this.artistAggregation = await Encode.trackSequence(
             this.encodedTracks,
             this.artistPopularity,
         );
@@ -57,7 +65,7 @@ export class SpotifyArtistHandler {
             this.spotifyResponse.tracks.map(
                 async (track: Spotify.Track, index: number): Promise<EncodedTrack> => {
                     if(this.spotifyFeaturesResponse == null) throw new Error('Tried to encode track before receiving all info');
-                    return Encoder.encodeTrack(
+                    return Encode.track(
                         track,
                         this.spotifyFeaturesResponse.audio_features[index],
                     );
@@ -75,9 +83,10 @@ export class SpotifyArtistHandler {
         this.spotifyFeaturesResponse = await this.spotifyApi.getBatch<Spotify.AudioFeatureBatchResponse>(trackIds, 'audio-features');
     }
 
-    public async getEncodedTrackSequence(): Promise<ArtistAggregation> {
+    public async getEncodedArtist(): Promise<EncodedArtist> {
         await this.requestTracks();
         await this.encodeTracks();
+        await this.encodeTrackSequence();
         await this.encodeArtist();
         if(this.encodedArtist == null) {
             throw new Error(`Failed to encode artist: ${this.spotifyId}`);

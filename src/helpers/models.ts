@@ -3,12 +3,17 @@ import * as tf from '@tensorflow/tfjs';
 export class Models {
     private static instance: Models;
 
-    private trackEncoder: Model = {
+    private artistEncoderInstance: Model = {
+        model: null,
+        path: 'models/artistEncoder/model.json',
+    };
+
+    private trackEncoderInstance: Model = {
         model: null,
         path: 'models/trackEncoder/model.json',
     };
 
-    private trackSequenceEncoder: Model = {
+    private trackSequenceEncoderInstance: Model = {
         model: null,
         path: 'models/trackSequenceEncoder/model.json',
     };
@@ -20,12 +25,16 @@ export class Models {
         return Models.instance;
     }
 
-    public getTrackEncoder(): Promise<tf.LayersModel> {
-        return Models.loadModel(this.trackEncoder);
+    public artistEncoder(): Promise<tf.LayersModel> {
+        return Models.loadModel(this.artistEncoderInstance);
     }
 
-    public getTrackSequenceEncoder(): Promise<tf.LayersModel> {
-        return Models.loadModel(this.trackSequenceEncoder);
+    public trackEncoder(): Promise<tf.LayersModel> {
+        return Models.loadModel(this.trackEncoderInstance);
+    }
+
+    public trackSequenceEncoder(): Promise<tf.LayersModel> {
+        return Models.loadModel(this.trackSequenceEncoderInstance);
     }
 
     private static async loadModel(target: Model): Promise<tf.LayersModel> {

@@ -2,8 +2,20 @@ import * as tf from '@tensorflow/tfjs';
 import * as Spotify from 'spotify';
 import { Models } from './models';
 
-export class Encoder {
-    public static async encodeTrack(
+export class Encode {
+    public static async artist(artist: ArtistAggregation): Promise<EncodedArtist> {
+        const models = Models.getInstance();
+        const artistEncoder = await models.artistEncoder();
+
+        const aggregationTensor = tf
+            .tensor(artist)
+            .as2D(1, 33);
+        const encodedTensor = artistEncoder.predict(aggregationTensor) as tf.Tensor;
+        const encodedArtist = await encodedTensor.array() as EncodedArtist[];
+        return encodedArtist[0];
+    }
+
+    public static async track(
         info: Spotify.Track,
         features: Spotify.AudioFeature,
     ): Promise<EncodedTrack> {
@@ -26,7 +38,7 @@ export class Encoder {
         ];
 
         const models = Models.getInstance();
-        const trackEncoder = await models.getTrackEncoder();
+        const trackEncoder = await models.trackEncoder();
 
         const aggregationTensor = tf
             .tensor(aggregation)
@@ -36,16 +48,16 @@ export class Encoder {
         return encodedTrack;
     }
 
-    public static async encodeTrackSequence(
+    public static async trackSequence(
         encodedTracks: EncodedTrack[],
         artistPopularity: number,
     ): Promise<ArtistAggregation> {
         const models = Models.getInstance();
-        const trackSequenceEncoder = await models.getTrackSequenceEncoder();
+        const trackSequenceEncoder = await models.trackSequenceEncoder();
 
         const aggregationTensor = tf
             .tensor(encodedTracks)
-            .as3D(1, encodedTracks.length, encodedTracks[0].length);
+            .as3D(1, 5, 13);
         const encodedTensor = trackSequenceEncoder.predict(aggregationTensor) as tf.Tensor;
         const encodedArtistTracks = await encodedTensor.array() as number[][];
 
@@ -73,6 +85,25 @@ export type ArtistAggregation = [
     number,
     number,
     number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+]
+
+export type EncodedArtist = [
     number,
     number,
     number,
