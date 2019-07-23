@@ -43,9 +43,9 @@ const router = new Router({
 router.beforeEach((to, _, next): void => {
     try {
         if(to.matched.length === 0) {
-            store.dispatch('spotifyToken/parseUrlResponse', to.fullPath);
+            store.dispatch('spotify/initializeApi', to.fullPath);
             next('/');
-        } else {
+        } else if(store.state.spotify != null) {
             next();
         }
     } catch(err) {

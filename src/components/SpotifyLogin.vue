@@ -10,7 +10,7 @@ import Vue from 'vue';
 import { createNamespacedHelpers } from 'vuex';
 import { Component } from 'vue-property-decorator';
 
-const { mapGetters } = createNamespacedHelpers('spotifyToken');
+const { mapGetters } = createNamespacedHelpers('spotify');
 
 @Component({
     computed: {
@@ -26,7 +26,7 @@ export default class Greeting extends Vue {
 
 <style scoped>
 h2 {
-    font-size: 2em;
+    font-size: 1.8em;
     margin-bottom: 0.6em;
 }
 i {

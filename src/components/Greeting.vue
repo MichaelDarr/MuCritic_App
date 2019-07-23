@@ -15,6 +15,13 @@
     </div>
 </template>
 
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+
+@Component({})
+export default class Greeting extends Vue {}
+</script>
+
 <style scoped>
 h1 {
     font-size: 7em;
@@ -31,6 +38,6 @@ i {
     font-size: 0.9em;
 }
 .sub-2 {
-    font-size: 1.4em;
+    font-size: 1.3em;
 }
 </style>

@@ -2,22 +2,22 @@ import { Module } from 'vuex';
 import { getters } from './getters';
 import { actions } from './actions';
 import { mutations } from './mutations';
-import { SpotifyTokenState } from './types';
+import { SpotifyState } from './types';
 import { RootState } from '../types';
 
-export const state: SpotifyTokenState = {
+export const state: SpotifyState = {
     authenticated: false,
     baseUrl: 'https://accounts.spotify.com/authorize',
     clientId: 'a01304edb42448d1aa31c3b255400130',
-    redirectUri: 'localhost:8080/',
+    redirectUri: 'http://localhost:8080/',
     responseType: 'token',
     scope: 'user-top-read',
-    spotifyToken: null,
+    api: null,
 };
 
 const namespaced = true;
 
-export const spotifyToken: Module<SpotifyTokenState, RootState> = {
+export const spotify: Module<SpotifyState, RootState> = {
     namespaced,
     state,
     getters,

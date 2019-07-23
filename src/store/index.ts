@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 
-import { spotifyToken } from './spotifyToken/index';
+import { spotify } from './spotify/index';
 import {
     RootState,
     Log,
@@ -13,9 +13,10 @@ const store: StoreOptions<RootState> = {
     state: {
         errorLog: [],
         miscLog: [],
+        spotify: null,
     },
     modules: {
-        spotifyToken,
+        spotify,
     },
     mutations: {
         logError(state, payload: Log): void {
