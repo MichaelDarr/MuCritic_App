@@ -277,6 +277,8 @@ export interface TracksBatchResponse {
     tracks: Track[];
 }
 
+export type UserTopMusicResponse<T1 extends Artist | Track> = Paging<T1>
+
 export interface AlbumSearchResponse {
     albums: Paging<AlbumSimplified>;
 }
@@ -306,7 +308,8 @@ export type Response =
     | BatchResponse
     | GenreSeedsResponse
     | SearchResponse
-    | TracksResponse;
+    | TracksResponse
+    | UserTopMusicResponse<Artist | Track>;
 
 
 // Aquired from https://gist.github.com/evolkmann/740d24889c509c08484a8ff72af5dd64

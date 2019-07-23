@@ -122,6 +122,19 @@ export class SpotifyApi {
     }
 
     /**
+     * [Get a User's Top Artists and Tracks](https://developer.spotify.com/documentation/web-api/reference/personalization/get-users-top-artists-and-tracks/)
+     */
+    public async getUserTopMusic<T1 extends Spotify.Artist | Spotify.Track>(
+        type: 'artists' | 'tracks',
+        timeRange: 'long_term' | 'medium_term' | 'short_term' = 'medium_term',
+        limit = 20,
+        offset = 0,
+    ): Promise<Spotify.UserTopMusicResponse<T1>> {
+        const url = `https://api.spotify.com/v1/me/top/${type}?limit=${limit}&offset=${offset}&time_range=${timeRange}`;
+        return this.spotifyRequest<Spotify.UserTopMusicResponse<T1>>(url, 'GET');
+    }
+
+    /**
      * @param query [spotify docs](https://developer.spotify.com/documentation/web-api/reference/search/search/)
      */
     public async search<T extends Spotify.SearchResponse>(
@@ -149,15 +162,17 @@ export class SpotifyApi {
             };
             request(
                 requestOptions,
-                async (error, response, body): Promise<void> => {
-                    if(error) {
+                (error, response, body): void => {
+                    if(error != null) {
                         reject(new Error(`request failed for ${url}: ${error}`));
+                    } else if(body == null) {
+                        reject(new Error(`request failed for ${url}: body was null`));
                     } else if(body.error != null && body.error.status === 429) {
                         const spotifyApiTemp = this;
                         setTimeout((): void => {
                             resolve(spotifyApiTemp.spotifyRequest(url, method));
                         }, (response.headers['Retry-After'] as unknown) as number * 1000);
-                    } else{
+                    } else {
                         resolve(body);
                     }
                 },

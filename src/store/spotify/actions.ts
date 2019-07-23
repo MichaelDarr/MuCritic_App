@@ -16,9 +16,10 @@ export const actions: ActionTree<SpotifyState, RootState> = {
             });
         }
     },
-    requestArtists({ state }): void {
+    async requestArtists({ state }): Promise<void> {
         if(state.api != null) {
-            console.log(`requesting artists. ${state.api.accessToken}`);
+            const favorites = await state.api.getUserTopMusic('artists');
+            favorites.items.forEach((artist): void => console.log(artist.name));
         }
     },
 };
