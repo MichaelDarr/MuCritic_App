@@ -9,9 +9,9 @@ export const state: SpotifyState = {
     authenticated: false,
     baseUrl: 'https://accounts.spotify.com/authorize',
     clientId: 'a01304edb42448d1aa31c3b255400130',
-    redirectUri: process.env.NODE_ENV === 'production'
-        ? 'https://michaeldarr.github.io/mucritic-web/'
-        : 'http://localhost:8080/',
+    redirectUri: process.env.NODE_ENV === 'development'
+        ? 'http://localhost:8080/'
+        : 'https://michaeldarr.github.io/mucritic-web/',
     responseType: 'token',
     scope: 'user-top-read',
     api: null,
