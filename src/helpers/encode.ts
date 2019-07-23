@@ -15,7 +15,7 @@ export class Encode {
         return encodedArtist[0];
     }
 
-    public static async taste(encodedArtists: EncodedArtist[]): Promise<tf.Tensor> {
+    public static async taste(encodedArtists: EncodedArtist[]): Promise<tf.Sequential> {
         if(encodedArtists.length < 5) throw new Error('taste encoder must be passed 5 artists');
         const models = Models.getInstance();
         const favoriteArtistsEncoder = await models.favoriteArtistsEncoder();
@@ -28,7 +28,15 @@ export class Encode {
         let tasteTensor = tasteMapper.predict(favoriteArtistsTensor) as tf.Tensor;
         tasteTensor = tasteTensor.reshape([16, 1]);
         tasteTensor = tasteTensor.mul(tf.scalar(-1));
-        return tasteTensor;
+        const model = tf.sequential();
+        model.add(tf.layers.dense({
+            inputShape: [16],
+            name: 'perceptron',
+            units: 1,
+            useBias: false,
+            weights: [tasteTensor],
+        }));
+        return model;
     }
 
     public static async track(

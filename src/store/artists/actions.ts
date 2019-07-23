@@ -27,7 +27,7 @@ export const actions: ActionTree<ArtistsState, RootState> = {
             }),
         );
         commit('setEncodings', encodedArtists);
-        const taste = await Encode.taste(encodedArtists.slice(0, 5));
-        console.log(taste.arraySync());
+        const tasteModel = await Encode.taste(encodedArtists.slice(0, 5));
+        commit('setTasteModel', tasteModel, { root: true });
     },
 };

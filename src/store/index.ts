@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
+import { Sequential } from '@tensorflow/tfjs';
 
 import { artists } from './artists/index';
 import { spotify } from './spotify/index';
@@ -15,6 +16,7 @@ const store: StoreOptions<RootState> = {
         errorLog: [],
         miscLog: [],
         spotify: null,
+        tasteModel: null,
     },
     modules: {
         artists,
@@ -26,6 +28,9 @@ const store: StoreOptions<RootState> = {
         },
         logMisc(state, payload: Log): void {
             state.miscLog.push(payload);
+        },
+        setTasteModel(state, payload: Sequential): void {
+            state.tasteModel = payload;
         },
     },
 };
