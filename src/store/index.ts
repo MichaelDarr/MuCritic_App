@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 
+import { artists } from './artists/index';
 import { spotify } from './spotify/index';
 import {
     RootState,
@@ -16,6 +17,7 @@ const store: StoreOptions<RootState> = {
         spotify: null,
     },
     modules: {
+        artists,
         spotify,
     },
     mutations: {

@@ -16,10 +16,19 @@ export const actions: ActionTree<SpotifyState, RootState> = {
             });
         }
     },
-    async requestArtists({ state }): Promise<void> {
+    async requestArtists({ commit, dispatch, state }): Promise<void> {
         if(state.api != null) {
-            const favorites = await state.api.getUserTopMusic('artists');
-            favorites.items.forEach((artist): void => console.log(artist.name));
+            const favoriteArtists = await state.api.getUserTopMusic('artists');
+            commit(
+                'artists/setArtists',
+                favoriteArtists.items,
+                { root: true },
+            );
+            dispatch(
+                'artists/encode',
+                null,
+                { root: true },
+            );
         }
     },
 };

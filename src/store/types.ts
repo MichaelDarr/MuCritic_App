@@ -1,4 +1,4 @@
-import { SpotifyApi } from '../helpers/spotifyApi';
+import { SpotifyState } from './spotify/types';
 
 export interface Log {
     location: string;
@@ -8,5 +8,5 @@ export interface Log {
 export interface RootState {
     errorLog: Log[];
     miscLog: Log[];
-    spotify: SpotifyApi | null;
+    spotify: SpotifyState | null;
 }
