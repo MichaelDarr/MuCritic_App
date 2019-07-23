@@ -15,6 +15,22 @@ export class Encode {
         return encodedArtist[0];
     }
 
+    public static async taste(encodedArtists: EncodedArtist[]): Promise<tf.Tensor> {
+        if(encodedArtists.length < 5) throw new Error('taste encoder must be passed 5 artists');
+        const models = Models.getInstance();
+        const favoriteArtistsEncoder = await models.favoriteArtistsEncoder();
+        const tasteMapper = await models.tasteMapper();
+
+        const artistTensor = tf
+            .tensor(encodedArtists.slice(0, 5))
+            .as3D(1, 5, 16);
+        const favoriteArtistsTensor = favoriteArtistsEncoder.predict(artistTensor);
+        let tasteTensor = tasteMapper.predict(favoriteArtistsTensor) as tf.Tensor;
+        tasteTensor = tasteTensor.reshape([16, 1]);
+        tasteTensor = tasteTensor.mul(tf.scalar(-1));
+        return tasteTensor;
+    }
+
     public static async track(
         info: Spotify.Track,
         features: Spotify.AudioFeature,
@@ -22,6 +38,7 @@ export class Encode {
         const aggregation = [
             features.acousticness,
             features.danceability,
+            info.duration_ms / 600000,
             features.energy,
             info.explicit ? 1 : 0,
             features.instrumentalness,
@@ -33,7 +50,6 @@ export class Encode {
             features.tempo / 200,
             features.time_signature / 8,
             info.track_number / 10,
-            info.duration_ms / 600000,
             features.valence,
         ];
 
@@ -104,6 +120,29 @@ export type ArtistAggregation = [
 ]
 
 export type EncodedArtist = [
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+]
+
+export type EncodedFavoriteArtists = [
+    number,
+    number,
+    number,
+    number,
     number,
     number,
     number,

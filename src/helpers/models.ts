@@ -8,6 +8,16 @@ export class Models {
         path: 'models/artistEncoder/model.json',
     };
 
+    private favoriteArtistsEncoderInstance: Model = {
+        model: null,
+        path: 'models/favoriteArtistsEncoder/model.json',
+    };
+
+    private tasteMapperInstance: Model = {
+        model: null,
+        path: 'models/taste/model.json',
+    };
+
     private trackEncoderInstance: Model = {
         model: null,
         path: 'models/trackEncoder/model.json',
@@ -27,6 +37,14 @@ export class Models {
 
     public artistEncoder(): Promise<tf.LayersModel> {
         return Models.loadModel(this.artistEncoderInstance);
+    }
+
+    public favoriteArtistsEncoder(): Promise<tf.LayersModel> {
+        return Models.loadModel(this.favoriteArtistsEncoderInstance);
+    }
+
+    public tasteMapper(): Promise<tf.LayersModel> {
+        return Models.loadModel(this.tasteMapperInstance);
     }
 
     public trackEncoder(): Promise<tf.LayersModel> {

@@ -2,7 +2,7 @@ import { ActionTree } from 'vuex';
 import { ArtistsState } from './types';
 import { RootState } from '../types';
 import { SpotifyArtistHandler } from '../../helpers/spotifyArtistHandler';
-import { EncodedArtist } from '../../helpers/encode';
+import { Encode, EncodedArtist } from '../../helpers/encode';
 
 
 export const actions: ActionTree<ArtistsState, RootState> = {
@@ -27,5 +27,7 @@ export const actions: ActionTree<ArtistsState, RootState> = {
             }),
         );
         commit('setEncodings', encodedArtists);
+        const taste = await Encode.taste(encodedArtists.slice(0, 5));
+        console.log(taste.arraySync());
     },
 };
