@@ -3,9 +3,15 @@ import * as tf from '@tensorflow/tfjs';
 export class Models {
     private static instance: Models;
 
-    private trackEncoderModel: tf.LayersModel | undefined;
+    private trackEncoder: Model = {
+        model: null,
+        path: 'models/trackEncoder/model.json',
+    };
 
-    private trackEncoderPath = 'models/trackEncoder/model.json';
+    private trackSequenceEncoder: Model = {
+        model: null,
+        path: 'models/trackSequenceEncoder/model.json',
+    };
 
     public static getInstance(): Models {
         if(!Models.instance) {
@@ -14,10 +20,23 @@ export class Models {
         return Models.instance;
     }
 
-    public async trackEncoder(): Promise<tf.LayersModel> {
-        if(this.trackEncoderModel == null) {
-            this.trackEncoderModel = await tf.loadLayersModel(this.trackEncoderPath);
-        }
-        return this.trackEncoderModel;
+    public getTrackEncoder(): Promise<tf.LayersModel> {
+        return Models.loadModel(this.trackEncoder);
     }
+
+    public getTrackSequenceEncoder(): Promise<tf.LayersModel> {
+        return Models.loadModel(this.trackSequenceEncoder);
+    }
+
+    private static async loadModel(target: Model): Promise<tf.LayersModel> {
+        if(target.model == null) {
+            target.model = await tf.loadLayersModel(target.path);
+        }
+        return target.model;
+    }
+}
+
+export interface Model {
+    model: tf.LayersModel | null;
+    path: string;
 }

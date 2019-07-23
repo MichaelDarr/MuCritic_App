@@ -2,14 +2,19 @@ import * as Spotify from 'spotify';
 
 import { SpotifyApi } from './spotifyApi';
 import {
+    ArtistAggregation,
     EncodedTrack,
-    TrackAggregator,
-} from './trackAggregator';
+    Encoder,
+} from './encoder';
 
 /**
  * Spotify Track Scraper implementing a CSV writer and optional encoding via tensorflow models
  */
-export class SpotifyArtistTracksScraper {
+export class SpotifyArtistHandler {
+    public artistPopularity: number;
+
+    public encodedArtist: ArtistAggregation | undefined;
+
     public encodedTracks: EncodedTrack[];
 
     protected spotifyApi: SpotifyApi;
@@ -24,16 +29,26 @@ export class SpotifyArtistTracksScraper {
 
     public constructor(
         spotifyId: string,
+        artistPopularity: number,
         spotifyApi: SpotifyApi,
         trackCount = 5,
     ) {
         this.spotifyId = spotifyId;
+        this.artistPopularity = artistPopularity;
         this.spotifyApi = spotifyApi;
-        this.encodedTracks = [];
         this.trackCount = trackCount;
+        this.encodedTracks = [];
     }
 
-    public async encode(): Promise<void> {
+    public async encodeArtist(): Promise<void> {
+        if(this.encodedTracks.length !== 5) throw new Error(`track sequence encoder found ${this.encodedTracks.length} tracks (should be 5)`);
+        this.encodedArtist = await Encoder.encodeTrackSequence(
+            this.encodedTracks,
+            this.artistPopularity,
+        );
+    }
+
+    public async encodeTracks(): Promise<void> {
         if(
             this.spotifyResponse == null
             || this.spotifyFeaturesResponse == null
@@ -42,17 +57,16 @@ export class SpotifyArtistTracksScraper {
             this.spotifyResponse.tracks.map(
                 async (track: Spotify.Track, index: number): Promise<EncodedTrack> => {
                     if(this.spotifyFeaturesResponse == null) throw new Error('Tried to encode track before receiving all info');
-                    const aggregation = TrackAggregator.aggregate(
+                    return Encoder.encodeTrack(
                         track,
                         this.spotifyFeaturesResponse.audio_features[index],
                     );
-                    return TrackAggregator.encode(aggregation);
                 },
             ),
         );
     }
 
-    public async request(): Promise<void> {
+    public async requestTracks(): Promise<void> {
         this.spotifyResponse = await this.spotifyApi.getArtistTopTracks(this.spotifyId);
         if(this.spotifyResponse.tracks.length < this.trackCount) throw new Error(`Artist scraper found less than ${this.trackCount} top tracks`);
         this.spotifyResponse.tracks = this.spotifyResponse.tracks.slice(0, this.trackCount);
@@ -61,9 +75,13 @@ export class SpotifyArtistTracksScraper {
         this.spotifyFeaturesResponse = await this.spotifyApi.getBatch<Spotify.AudioFeatureBatchResponse>(trackIds, 'audio-features');
     }
 
-    public async getEncodedTracks(): Promise<EncodedTrack[]> {
-        await this.request();
-        await this.encode();
-        return this.encodedTracks;
+    public async getEncodedTrackSequence(): Promise<ArtistAggregation> {
+        await this.requestTracks();
+        await this.encodeTracks();
+        await this.encodeArtist();
+        if(this.encodedArtist == null) {
+            throw new Error(`Failed to encode artist: ${this.spotifyId}`);
+        }
+        return this.encodedArtist;
     }
 }

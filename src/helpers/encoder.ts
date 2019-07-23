@@ -2,12 +2,12 @@ import * as tf from '@tensorflow/tfjs';
 import * as Spotify from 'spotify';
 import { Models } from './models';
 
-export class TrackAggregator {
-    public static aggregate(
+export class Encoder {
+    public static async encodeTrack(
         info: Spotify.Track,
         features: Spotify.AudioFeature,
-    ): TrackAggregation {
-        return [
+    ): Promise<EncodedTrack> {
+        const aggregation = [
             features.acousticness,
             features.danceability,
             features.energy,
@@ -24,21 +24,56 @@ export class TrackAggregator {
             info.duration_ms / 600000,
             features.valence,
         ];
-    }
 
-    public static async encode(aggregation: TrackAggregation): Promise<EncodedTrack> {
         const models = Models.getInstance();
-        const trackEncoder = await models.trackEncoder();
+        const trackEncoder = await models.getTrackEncoder();
+
         const aggregationTensor = tf
             .tensor(aggregation)
-            .as2D(1, aggregation.length);
+            .as2D(1, 15);
         const encodedTensor = trackEncoder.predict(aggregationTensor) as tf.Tensor;
         const [encodedTrack] = await encodedTensor.array() as EncodedTrack[];
         return encodedTrack;
     }
+
+    public static async encodeTrackSequence(
+        encodedTracks: EncodedTrack[],
+        artistPopularity: number,
+    ): Promise<ArtistAggregation> {
+        const models = Models.getInstance();
+        const trackSequenceEncoder = await models.getTrackSequenceEncoder();
+
+        const aggregationTensor = tf
+            .tensor(encodedTracks)
+            .as3D(1, encodedTracks.length, encodedTracks[0].length);
+        const encodedTensor = trackSequenceEncoder.predict(aggregationTensor) as tf.Tensor;
+        const encodedArtistTracks = await encodedTensor.array() as number[][];
+
+        return [
+            artistPopularity / 100,
+        ].concat(encodedArtistTracks[0]) as ArtistAggregation;
+    }
 }
 
-export type TrackAggregation = [
+export type ArtistAggregation = [
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
     number,
     number,
     number,
