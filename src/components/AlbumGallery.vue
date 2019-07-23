@@ -13,7 +13,7 @@ import { Component } from 'vue-property-decorator';
 @Component({})
 export default class Greeting extends Vue {
     mounted() {
-        this.$store.dispatch('spotify/requestArtists');
+        this.$store.dispatch('spotify/requestArtists', 'medium');
     }
 }
 </script>

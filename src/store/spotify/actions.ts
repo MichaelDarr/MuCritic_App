@@ -1,5 +1,8 @@
 import { ActionTree } from 'vuex';
-import { SpotifyState } from './types';
+import {
+    SpotifyState,
+} from './types';
+import { SpotifyTimeRange, TimeRangeBucket } from '../artists/types';
 import { RootState } from '../types';
 import { SpotifyApi } from '../../helpers/spotifyApi';
 
@@ -16,9 +19,15 @@ export const actions: ActionTree<SpotifyState, RootState> = {
             });
         }
     },
-    async requestArtists({ commit, dispatch, state }): Promise<void> {
+    async requestArtists(
+        { commit, dispatch, state },
+        payload: TimeRangeBucket,
+    ): Promise<void> {
         if(state.api != null) {
-            const favoriteArtists = await state.api.getUserTopMusic('artists');
+            const favoriteArtists = await state.api.getUserTopMusic(
+                'artists',
+                SpotifyTimeRange[payload],
+            );
             commit(
                 'artists/setArtists',
                 favoriteArtists.items,
@@ -26,7 +35,7 @@ export const actions: ActionTree<SpotifyState, RootState> = {
             );
             dispatch(
                 'artists/encode',
-                null,
+                payload,
                 { root: true },
             );
         }

@@ -5,7 +5,9 @@ import { ArtistsState } from './types';
 import { RootState } from '../types';
 
 export const state: ArtistsState = {
-    artists: [],
+    short: [],
+    medium: [],
+    long: [],
 };
 
 const namespaced = true;

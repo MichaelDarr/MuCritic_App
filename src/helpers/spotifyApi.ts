@@ -126,7 +126,7 @@ export class SpotifyApi {
      */
     public async getUserTopMusic<T1 extends Spotify.Artist | Spotify.Track>(
         type: 'artists' | 'tracks',
-        timeRange: 'long_term' | 'medium_term' | 'short_term' = 'medium_term',
+        timeRange: TimeRange = 'medium_term',
         limit = 20,
         offset = 0,
     ): Promise<Spotify.UserTopMusicResponse<T1>> {
@@ -180,3 +180,8 @@ export class SpotifyApi {
         });
     }
 }
+
+export type TimeRange =
+    | 'long_term'
+    | 'medium_term'
+    | 'short_term'
