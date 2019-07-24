@@ -8,9 +8,17 @@ import {
 import { EncodedArtist } from '../../helpers/encode';
 
 export const mutations: MutationTree<ArtistsState> = {
-    setArtists(state, payload: Spotify.Artist[]): void {
-        const muArtists = payload.map((artist): MuArtist => ({ encoded: null, ...artist }));
-        state.medium = muArtists;
+    setArtists(
+        state,
+        payload: {
+            artists: Spotify.Artist[];
+            bucket: TimeRangeBucket;
+        },
+    ): void {
+        const muArtists = payload.artists.map(
+            (artist): MuArtist => ({ encoded: null, ...artist }),
+        );
+        state[payload.bucket] = muArtists;
     },
     setEncodings(
         state,

@@ -39,3 +39,9 @@ export type EncodedArtist = [
     number,
     number,
 ];
+
+export interface BucketBools {
+    short: boolean;
+    medium: boolean;
+    long: boolean;
+}

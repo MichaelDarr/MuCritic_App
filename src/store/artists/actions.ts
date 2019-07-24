@@ -1,6 +1,7 @@
 import { ActionTree } from 'vuex';
 import {
     ArtistsState,
+    MuArtist,
     TimeRangeBucket,
 } from './types';
 import { RootState } from '../types';
@@ -31,7 +32,18 @@ export const actions: ActionTree<ArtistsState, RootState> = {
             }),
         );
         commit('setEncodings', { encodedArtists, timeRange: payload });
-        const tasteModel = await Encode.taste(encodedArtists.slice(0, 5));
+    },
+    async learnTaste(
+        { commit, state },
+        payload: TimeRangeBucket,
+    ): Promise<void> {
+        const artists = state[payload].slice(0, 5);
+        const encodedArtists = artists.map((artist: MuArtist): EncodedArtist => {
+            const encoding = artist.encoded;
+            if(encoding == null) throw new Error('Tried to learn taste from unencoded artist.');
+            return encoding;
+        });
+        const tasteModel = await Encode.taste(encodedArtists);
         commit('setTasteModel', tasteModel, { root: true });
     },
 };

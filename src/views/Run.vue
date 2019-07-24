@@ -1,6 +1,6 @@
 <template>
   <div v-if="apiIsLoaded">
-    <AlbumGallery />
+    <Learning />
   </div>
   <div v-else>
     <Greeting />
@@ -11,7 +11,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { createNamespacedHelpers } from 'vuex';
-import AlbumGallery from '@/components/AlbumGallery.vue';
+import Learning from '@/components/Learning.vue';
 import Greeting from '@/components/Greeting.vue';
 import SpotifyLogin from '@/components/SpotifyLogin.vue';
 
@@ -19,7 +19,7 @@ const { mapState } = createNamespacedHelpers('spotify');
 
 @Component({
     components: {
-        AlbumGallery,
+        Learning,
         Greeting,
         SpotifyLogin,
     },

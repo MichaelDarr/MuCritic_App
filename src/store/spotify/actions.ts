@@ -31,7 +31,10 @@ export const actions: ActionTree<SpotifyState, RootState> = {
             );
             commit(
                 'artists/setArtists',
-                favoriteArtists.items,
+                {
+                    artists: favoriteArtists.items,
+                    bucket: payload,
+                },
                 { root: true },
             );
             dispatch(
