@@ -1,9 +1,15 @@
 import { GetterTree } from 'vuex';
-import { AlbumsState } from './types';
+import {
+    Album,
+    AlbumsState,
+} from './types';
 import { RootState } from '../types';
 
 
 export const getters: GetterTree<AlbumsState, RootState> = {
+    albums(state): Album[] {
+        return state.albums;
+    },
     loaded(state): boolean {
         return state.albums.length !== 0;
     },

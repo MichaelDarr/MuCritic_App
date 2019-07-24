@@ -56,7 +56,7 @@ export class SpotifyApi {
             throw new Error('failed to retrieve access token expiration');
         }
         this.accessToken = accessToken;
-        this.expirationTimestamp = Date.now() + expiresIn;
+        this.expirationTimestamp = Date.now() + (expiresIn * 1000);
     }
 
     /**

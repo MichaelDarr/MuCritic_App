@@ -1,9 +1,13 @@
 import { ActionTree } from 'vuex';
+
+import * as Spotify from 'spotify';
+
 import {
     SpotifyState,
 } from './types';
 import { SpotifyTimeRange, TimeRangeBucket } from '../artists/types';
 import { RootState } from '../types';
+import { Album } from '../albums/types';
 import { SpotifyApi } from '../../helpers/spotifyApi';
 
 
@@ -40,6 +44,33 @@ export const actions: ActionTree<SpotifyState, RootState> = {
             dispatch(
                 'artists/encode',
                 payload,
+                { root: true },
+            );
+        }
+    },
+    async requestAlbums(
+        { commit, state, rootGetters },
+        payload: {
+            start: number;
+            count: number;
+        },
+    ): Promise<void> {
+        if(state.api != null) {
+            const albums: Album[] = rootGetters['albums/albums'];
+            const ids = albums
+                .slice(payload.start, payload.start + payload.count)
+                .map((album): string => album.spotifyId);
+
+            const spotifyData = await state.api.getBatch<Spotify.AlbumBatchResponse>(
+                ids,
+                'albums',
+            );
+            commit(
+                'albums/setSpotifyInfo',
+                {
+                    start: payload.start,
+                    spotifyAlbums: spotifyData.albums,
+                },
                 { root: true },
             );
         }

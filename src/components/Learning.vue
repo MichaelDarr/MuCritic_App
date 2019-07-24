@@ -23,9 +23,6 @@ export default class Greeting extends Vue {
         const unsubscribe = this.$store.subscribe(
             (mutation) => {
                 switch (mutation.type) {
-                    case 'setTasteModel':
-                        this.$store.dispatch('albums/rate');
-                        break;
                     case 'artists/setEncodings':
                         if(mutation.payload.timeRange === 'medium') {
                             this.$store.dispatch(
@@ -35,8 +32,20 @@ export default class Greeting extends Vue {
                         }
                         break;
                     case 'albums/setScores':
-                        console.log('albums scored!');
                         unsubscribe();
+                        this.$store.commit(
+                            'albums/sort',
+                        );
+                        this.$store.dispatch(
+                            'spotify/requestAlbums',
+                            {
+                                start: 0,
+                                count: 20,
+                            },
+                        );
+                        break;
+                    case 'setTasteModel':
+                        this.$store.dispatch('albums/rate');
                         break;
                     default:
                         break;

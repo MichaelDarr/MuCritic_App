@@ -1,3 +1,5 @@
+import * as Spotify from 'spotify';
+
 export interface AlbumsState {
     albums: Album[];
 }
@@ -15,6 +17,9 @@ export interface Album {
     artistPopularity: number;
     encoding: EncodedAlbum;
     userScore: number | null;
+    image: Spotify.Image | null;
+    name: string | null;
+    artist: string | null;
 }
 
 export type EncodedAlbum = [

@@ -57,6 +57,9 @@ export const actions: ActionTree<AlbumsState, RootState> = {
                     Number(rowData[25]),
                 ],
                 userScore: null,
+                image: null,
+                name: null,
+                artist: null,
             };
         });
         commit('setAlbums', albums);
