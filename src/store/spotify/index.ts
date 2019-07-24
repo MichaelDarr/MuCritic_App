@@ -6,7 +6,6 @@ import { SpotifyState } from './types';
 import { RootState } from '../types';
 
 export const state: SpotifyState = {
-    authenticated: false,
     baseUrl: 'https://accounts.spotify.com/authorize',
     clientId: 'a01304edb42448d1aa31c3b255400130',
     redirectUri: process.env.NODE_ENV === 'development'

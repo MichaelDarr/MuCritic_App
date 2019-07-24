@@ -4,9 +4,6 @@ import { SpotifyApi } from '../../helpers/spotifyApi';
 
 export const mutations: MutationTree<SpotifyState> = {
     storeApi(state, payload: SpotifyApi): void {
-        if(payload != null) {
-            state.api = payload;
-            state.authenticated = true;
-        }
+        state.api = payload;
     },
 };

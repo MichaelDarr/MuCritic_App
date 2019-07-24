@@ -16,7 +16,6 @@ const store: StoreOptions<RootState> = {
     state: {
         errorLog: [],
         miscLog: [],
-        spotify: null,
         tasteModel: null,
     },
     modules: {

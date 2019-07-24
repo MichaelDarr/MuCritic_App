@@ -45,9 +45,8 @@ router.beforeEach((to, _, next): void => {
         if(to.matched.length === 0) {
             store.dispatch('spotify/initializeApi', to.fullPath);
             next('/');
-        } else if(store.state.spotify != null) {
-            next();
         }
+        next();
     } catch(err) {
         store.commit('logError', {
             location: 'page routing',

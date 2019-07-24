@@ -1,5 +1,5 @@
 export interface AlbumsState {
-    albums: [];
+    albums: Album[];
 }
 
 export interface Album {

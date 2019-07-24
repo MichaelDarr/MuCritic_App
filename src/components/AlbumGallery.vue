@@ -15,6 +15,10 @@ export default class Greeting extends Vue {
     mounted() {
         this.$store.dispatch('spotify/requestArtists', 'medium');
         this.$store.dispatch('albums/fetch');
+        this.$store.watch(
+            (_, getters) => getters['albums/loaded'] && getters['artists/loaded'],
+            () => console.log('callback'),
+        );
     }
 }
 </script>

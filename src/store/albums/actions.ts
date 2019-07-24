@@ -10,13 +10,8 @@ import { RootState } from '../types';
 export const actions: ActionTree<AlbumsState, RootState> = {
     async fetch({ commit }): Promise<void> {
         const csvRaw: string = await new Promise((resolve, reject): void => {
-            const requestOptions = {
-                url: 'http://localhost:8080/album_data.csv',
-                method: 'GET',
-                json: false,
-            };
             request(
-                requestOptions,
+                'http://localhost:8080/album_data.csv',
                 (error, response, body): void => {
                     if(error != null) {
                         reject(new Error(`album data failed to load: ${error}`));
@@ -61,6 +56,6 @@ export const actions: ActionTree<AlbumsState, RootState> = {
                 ],
             };
         });
-        console.log(albums[0]);
+        commit('setAlbums', albums);
     },
 };

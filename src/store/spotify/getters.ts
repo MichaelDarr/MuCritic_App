@@ -1,9 +1,13 @@
 import { GetterTree } from 'vuex';
 import { SpotifyState } from './types';
 import { RootState } from '../types';
+import { SpotifyApi } from '../../helpers/spotifyApi';
 
 
 export const getters: GetterTree<SpotifyState, RootState> = {
+    api(state): SpotifyApi | null {
+        return state.api;
+    },
     authUrl(state): string {
         let urlBuilder = state.baseUrl;
         urlBuilder += `?client_id=${state.clientId}`;
