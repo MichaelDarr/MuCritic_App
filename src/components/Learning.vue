@@ -9,7 +9,6 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import { BucketBools } from '../store/artists/types';
 
 
 @Component({})
@@ -21,37 +20,26 @@ export default class Greeting extends Vue {
         this.$store.dispatch('spotify/requestArtists', 'medium');
         this.$store.dispatch('spotify/requestArtists', 'long');
 
-        const unwatchArtistEncoded = this.$store.watch(
-            (_, getters) => getters['artists/encoded'],
-            (encoded: BucketBools) => {
-                if(encoded.medium) {
-                    this.$store.dispatch(
-                        'artists/learnTaste',
-                        'medium',
-                    );
-                    unwatchArtistEncoded();
-                }
-            },
-        );
-
-        const unwatchTaste = this.$store.watch(
-            (_, getters) => getters['tasteModel'],
-            (tasteModel) => {
-                if(tasteModel != null) {
-                    this.$store.dispatch(
-                        'albums/rate',
-                    );
-                    unwatchTaste();
-                }
-            },
-        );
-
-        const unwatchScoring = this.$store.watch(
-            (_, getters) => getters['albums/scored'],
-            (scored) => {
-                if(scored) {
-                    console.log('albums scored!');
-                    unwatchScoring();
+        const unsubscribe = this.$store.subscribe(
+            (mutation) => {
+                switch (mutation.type) {
+                    case 'setTasteModel':
+                        this.$store.dispatch('albums/rate');
+                        break;
+                    case 'artists/setEncodings':
+                        if(mutation.payload.timeRange === 'medium') {
+                            this.$store.dispatch(
+                                'artists/learnTaste',
+                                'medium',
+                            );
+                        }
+                        break;
+                    case 'albums/setScores':
+                        console.log('albums scored!');
+                        unsubscribe();
+                        break;
+                    default:
+                        break;
                 }
             },
         );

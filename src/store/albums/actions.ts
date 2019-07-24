@@ -63,18 +63,21 @@ export const actions: ActionTree<AlbumsState, RootState> = {
     },
     async rate({
         commit,
-        rootGetters,
+        rootState,
         state,
     }): Promise<void> {
-        const model: tf.Sequential = rootGetters['tasteModel'];
+        if(rootState.tasteModel == null) throw new Error('Tried to rate albums before model creation');
+        if(state.albums == null) throw new Error('No albums to rate');
+
+        const model: tf.Sequential = rootState.tasteModel;
         const { albums } = state;
-        if(model == null) throw new Error('Tried to rate albums before model creation');
-        if(albums == null) throw new Error('No albums to rate');
+
         const encodings = albums.map((album): EncodedAlbum => album.encoding);
         const dataTensor = tf.tensor2d(encodings, [encodings.length, 16]);
         const scoreTensor = model.predict(dataTensor) as tf.Tensor;
         const scoresRaw = scoreTensor.arraySync() as number[][];
         const scores = scoresRaw.map((scoreArr): number => scoreArr[0]);
+
         commit('setScores', scores);
     },
 };

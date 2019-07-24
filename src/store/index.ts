@@ -23,11 +23,6 @@ const store: StoreOptions<RootState> = {
         artists,
         spotify,
     },
-    getters: {
-        tasteModel(state): Sequential | null {
-            return state.tasteModel;
-        },
-    },
     mutations: {
         logError(state, payload: Log): void {
             state.errorLog.push(payload);
