@@ -27,6 +27,7 @@ export const actions: ActionTree<SpotifyState, RootState> = {
             const favoriteArtists = await state.api.getUserTopMusic(
                 'artists',
                 SpotifyTimeRange[payload],
+                5,
             );
             commit(
                 'artists/setArtists',

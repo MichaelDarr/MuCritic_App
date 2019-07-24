@@ -14,6 +14,7 @@ import { Component } from 'vue-property-decorator';
 export default class Greeting extends Vue {
     mounted() {
         this.$store.dispatch('spotify/requestArtists', 'medium');
+        this.$store.dispatch('albums/fetch');
     }
 }
 </script>

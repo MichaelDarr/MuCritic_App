@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 import { Sequential } from '@tensorflow/tfjs';
 
+import { albums } from './albums/index';
 import { artists } from './artists/index';
 import { spotify } from './spotify/index';
 import {
@@ -19,6 +20,7 @@ const store: StoreOptions<RootState> = {
         tasteModel: null,
     },
     modules: {
+        albums,
         artists,
         spotify,
     },
