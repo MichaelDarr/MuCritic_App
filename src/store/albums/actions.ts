@@ -1,8 +1,10 @@
+import * as tf from '@tensorflow/tfjs';
 import request from 'request';
 import { ActionTree } from 'vuex';
 import {
     Album,
     AlbumsState,
+    EncodedAlbum,
 } from './types';
 import { RootState } from '../types';
 
@@ -54,8 +56,25 @@ export const actions: ActionTree<AlbumsState, RootState> = {
                     Number(rowData[24]),
                     Number(rowData[25]),
                 ],
+                userScore: null,
             };
         });
         commit('setAlbums', albums);
+    },
+    async rate({
+        commit,
+        rootGetters,
+        state,
+    }): Promise<void> {
+        const model: tf.Sequential = rootGetters['tasteModel'];
+        const { albums } = state;
+        if(model == null) throw new Error('Tried to rate albums before model creation');
+        if(albums == null) throw new Error('No albums to rate');
+        const encodings = albums.map((album): EncodedAlbum => album.encoding);
+        const dataTensor = tf.tensor2d(encodings, [encodings.length, 16]);
+        const scoreTensor = model.predict(dataTensor) as tf.Tensor;
+        const scoresRaw = scoreTensor.arraySync() as number[][];
+        const scores = scoresRaw.map((scoreArr): number => scoreArr[0]);
+        commit('setScores', scores);
     },
 };

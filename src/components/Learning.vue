@@ -23,7 +23,7 @@ export default class Greeting extends Vue {
 
         const unwatchArtistEncoded = this.$store.watch(
             (_, getters) => getters['artists/encoded'],
-            (encoded) => {
+            (encoded: BucketBools) => {
                 if(encoded.medium) {
                     this.$store.dispatch(
                         'artists/learnTaste',
@@ -38,8 +38,20 @@ export default class Greeting extends Vue {
             (_, getters) => getters['tasteModel'],
             (tasteModel) => {
                 if(tasteModel != null) {
-                    console.log('time to learn!');
+                    this.$store.dispatch(
+                        'albums/rate',
+                    );
                     unwatchTaste();
+                }
+            },
+        );
+
+        const unwatchScoring = this.$store.watch(
+            (_, getters) => getters['albums/scored'],
+            (scored) => {
+                if(scored) {
+                    console.log('albums scored!');
+                    unwatchScoring();
                 }
             },
         );

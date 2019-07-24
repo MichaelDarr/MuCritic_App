@@ -14,6 +14,7 @@ export interface Album {
     artistMemberCount: number;
     artistPopularity: number;
     encoding: EncodedAlbum;
+    userScore: number | null;
 }
 
 export type EncodedAlbum = [
