@@ -29,9 +29,11 @@ h2 {
     font-size: 1.8em;
     margin-bottom: 0.6em;
 }
+
 i {
     color: #207bbf;
 }
+
 a {
     background: #1DB954;
     color: #fff;

@@ -85,14 +85,17 @@ h1 {
     font-size: 2em;
     margin: 0.5em 0 0 0;
 }
+
 i {
     color: #207bbf;
 }
+
 .content {
     margin: auto;
     max-width: 860px;
     padding: 30px 20px 20px 20px;
 }
+
 .albums {
     width: 100%;
     margin: 0;

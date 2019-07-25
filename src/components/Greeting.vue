@@ -27,16 +27,19 @@ h1 {
     font-size: 7em;
     margin: 0.5em 0 0 0;
 }
+
 i {
-    color: #207bbf;
+    color: #52baff;
 }
+
 .subheadding {
-    color: #2c3e50;
     margin: 1em 0 5em 0;
 }
+
 .sub-1 {
     font-size: 0.9em;
 }
+
 .sub-2 {
     font-size: 1.3em;
 }
