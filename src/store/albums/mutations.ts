@@ -29,7 +29,7 @@ export const mutations: MutationTree<AlbumsState> = {
                     || Math.abs(finalImg.width) - imgWidth > Math.abs(nextImg.width - imgWidth)
                 ) finalImg = nextImg;
             });
-            state.albums[index + payload.start].image = finalImg;
+            state.albums[index + payload.start].imageUrl = finalImg.url;
             state.albums[index + payload.start].name = spotifyAlbum.name;
             state.albums[index + payload.start].artist = spotifyAlbum.artists[0].name;
         });

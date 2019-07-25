@@ -13,7 +13,7 @@ export const actions: ActionTree<AlbumsState, RootState> = {
     async fetch({ commit }): Promise<void> {
         const csvRaw: string = await new Promise((resolve, reject): void => {
             request(
-                'http://localhost:8080/album_data.csv',
+                'https://michaeldarr.github.io/mucritic-web/album_data.csv',
                 (error, response, body): void => {
                     if(error != null) {
                         reject(new Error(`album data failed to load: ${error}`));
@@ -57,7 +57,7 @@ export const actions: ActionTree<AlbumsState, RootState> = {
                     Number(rowData[25]),
                 ],
                 userScore: null,
-                image: null,
+                imageUrl: null,
                 name: null,
                 artist: null,
             };

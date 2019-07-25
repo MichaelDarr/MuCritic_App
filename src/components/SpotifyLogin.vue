@@ -19,7 +19,7 @@ const { mapGetters } = createNamespacedHelpers('spotify');
         ]),
     },
 })
-export default class Greeting extends Vue {
+export default class SpotifyLogin extends Vue {
     'authUrl': string;
 }
 </script>
