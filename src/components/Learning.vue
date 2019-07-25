@@ -1,15 +1,20 @@
 <template>
     <div>
         <SmallLogo />
-        <Loading />
-        <FilterOptions />
-        <div class="content">
-            <div class="albums">
-                <AlbumBox
-                    v-for="album in albums"
-                    :key="album.spotifyId"
-                    :album="album"
-                />
+        <Loading
+            v-if="loading"
+            :status="status"
+        />
+        <div v-else>
+            <FilterOptions />
+            <div class="content">
+                <div class="albums">
+                    <AlbumDisplay
+                        v-for="album in albums"
+                        :key="album.spotifyId"
+                        :album="album"
+                    />
+                </div>
             </div>
         </div>
     </div>
@@ -20,16 +25,25 @@ import Vue from 'vue';
 import { createNamespacedHelpers } from 'vuex';
 import { Component } from 'vue-property-decorator';
 import { Album } from '../store/albums/types';
-import AlbumBox from '@/components/Album.vue';
+import AlbumDisplay from '@/components/AlbumDisplay.vue';
 import FilterOptions from '@/components/FilterOptions.vue';
 import SmallLogo from '@/components/SmallLogo.vue';
 import Loading from '@/components/Loading.vue';
 
 const { mapState } = createNamespacedHelpers('artists');
 
+export enum LearningStatus {
+    loadAlbums = 'importing ~30,000 albums',
+    encodeArtists = 'learning artist representations',
+    learnTaste = 'learning your taste',
+    rateAlbums = 'testing your taste on ~30,000 albums',
+    loadSpotifyAlbums = 'importing data for top rated albums',
+    complete = 'completed',
+}
+
 @Component({
     components: {
-        AlbumBox,
+        AlbumDisplay,
         FilterOptions,
         Loading,
         SmallLogo,
@@ -43,7 +57,13 @@ const { mapState } = createNamespacedHelpers('artists');
 export default class Learning extends Vue {
     albums: Album[] = [];
 
-    private 'bucket': string;
+    'bucket': string;
+
+    status: LearningStatus = LearningStatus.loadAlbums;
+
+    get loading(): boolean {
+        return this.status !== LearningStatus.complete;
+    }
 
     mounted() {
         this.$store.dispatch('albums/fetch');
@@ -55,19 +75,27 @@ export default class Learning extends Vue {
         this.$store.subscribe(
             (mutation) => {
                 switch (mutation.type) {
+                    case 'artists/setArtists':
+                        if(mutation.payload.timeRange === this.bucket) {
+                            this.status = LearningStatus.encodeArtists;
+                        }
+                        break;
                     case 'artists/setEncodings':
                         if(mutation.payload.timeRange === this.bucket) {
+                            this.status = LearningStatus.learnTaste;
                             this.$store.dispatch(
                                 'artists/learnTaste',
                             );
                         }
                         break;
                     case 'artists/setBucket':
+                        this.status = LearningStatus.learnTaste;
                         this.$store.dispatch(
                             'artists/learnTaste',
                         );
                         break;
                     case 'albums/setScores':
+                        this.status = LearningStatus.loadSpotifyAlbums;
                         this.$store.commit(
                             'albums/sort',
                         );
@@ -79,7 +107,11 @@ export default class Learning extends Vue {
                             },
                         );
                         break;
+                    case 'albums/setSpotifyInfo':
+                        this.status = LearningStatus.complete;
+                        break;
                     case 'setTasteModel':
+                        this.status = LearningStatus.rateAlbums;
                         this.$store.dispatch('albums/rate');
                         break;
                     default:
@@ -96,6 +128,7 @@ export default class Learning extends Vue {
         );
     }
 }
+
 </script>
 
 <style scoped>

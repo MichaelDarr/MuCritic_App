@@ -27,7 +27,7 @@ import { Album } from '../store/albums/types';
 
 
 @Component({})
-export default class Learning extends Vue {
+export default class AlbumDisplay extends Vue {
     @Prop()
     album!: Album;
 }

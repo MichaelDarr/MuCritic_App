@@ -2,13 +2,13 @@
     <div class="container">
         <LoadingAnimation />
         <h2 class="status">
-            Learning...
+            {{ status }}
         </h2>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import LoadingAnimation from '@/components/LoadingAnimation.vue';
 
 @Component({
@@ -17,6 +17,7 @@ import LoadingAnimation from '@/components/LoadingAnimation.vue';
     },
 })
 export default class FilterOptions extends Vue {
+    @Prop(String) readonly status!: string;
 }
 </script>
 
