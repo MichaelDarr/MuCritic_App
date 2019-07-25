@@ -1,10 +1,15 @@
 <template>
     <div class="album-container-outer">
         <div class="album-container-inner">
-            <img
-                class="album-art"
-                :src="album.imageUrl"
+            <a
+                class="album-art-link"
+                :href="album.spotifyUrl"
             >
+                <img
+                    class="album-art"
+                    :src="album.imageUrl"
+                >
+            </a>
             <p class="album-name">
                 {{ album.name }}
             </p>
@@ -31,31 +36,38 @@ export default class Learning extends Vue {
 <style scoped>
 .album-container-outer {
     flex-basis: 100%;
+    font-size: 1.4em;
     margin: 0;
 }
 @media (min-width: 400px) {
     .album-container-outer {
         flex-basis: 50%;
+        font-size: 1em;
     }
 }
 @media (min-width: 650px) {
     .album-container-outer {
         flex-basis: 33.3%;
+        font-size: 0.9em;
     }
 }
 @media (min-width: 860px) {
     .album-container-outer {
         flex-basis: 25%;
+        font-size: 0.8em;
     }
 }
 .album-container-inner {
     margin: 20px;
     text-align: left;
-    font-size: 0.8em;
     line-height: 1em;
 }
 .album-art {
     width: 100%;
+}
+.album-art-link {
+    width: 100%;
+    height: 100%;
 }
 .album-name {
     margin-top: 5px;

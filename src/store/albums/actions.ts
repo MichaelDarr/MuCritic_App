@@ -61,6 +61,7 @@ export const actions: ActionTree<AlbumsState, RootState> = {
                 ],
                 userScore: null,
                 imageUrl: null,
+                spotifyUrl: null,
                 name: null,
                 artist: null,
             };

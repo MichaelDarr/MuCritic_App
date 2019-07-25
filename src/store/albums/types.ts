@@ -16,6 +16,7 @@ export interface Album {
     encoding: EncodedAlbum;
     userScore: number | null;
     imageUrl: string | null;
+    spotifyUrl: string | null;
     name: string | null;
     artist: string | null;
 }
