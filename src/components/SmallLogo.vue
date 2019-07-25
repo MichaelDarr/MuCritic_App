@@ -4,10 +4,17 @@
     </h1>
 </template>
 
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+
+@Component({})
+export default class SmallLogo extends Vue {}
+</script>
+
 <style scoped>
 h1 {
     font-size: 2em;
-    margin: 0.5em 0 0 0;
+    margin-bottom: 1em;
 }
 
 i {

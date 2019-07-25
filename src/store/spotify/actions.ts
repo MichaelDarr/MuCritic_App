@@ -32,6 +32,7 @@ export const actions: ActionTree<SpotifyState, RootState> = {
                 'artists',
                 SpotifyTimeRange[payload],
                 5,
+                5,
             );
             commit(
                 'artists/setArtists',

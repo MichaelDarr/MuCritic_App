@@ -1,6 +1,7 @@
 <template>
     <div>
         <SmallLogo />
+        <FilterOptions />
         <div class="content">
             <div class="albums">
                 <AlbumBox
@@ -17,18 +18,23 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import { Album } from '../store/albums/types';
+import { TimeRangeBucket } from '../store/artists/types';
 import AlbumBox from '@/components/Album.vue';
+import FilterOptions from '@/components/FilterOptions.vue';
 import SmallLogo from '@/components/SmallLogo.vue';
 
 
 @Component({
     components: {
         AlbumBox,
+        FilterOptions,
         SmallLogo,
     },
 })
 export default class Learning extends Vue {
     albums: Album[] = [];
+
+    intialTimeRange: TimeRangeBucket = 'medium';
 
     mounted() {
         this.$store.dispatch('albums/fetch');
@@ -41,10 +47,10 @@ export default class Learning extends Vue {
             (mutation) => {
                 switch (mutation.type) {
                     case 'artists/setEncodings':
-                        if(mutation.payload.timeRange === 'medium') {
+                        if(mutation.payload.timeRange === this.intialTimeRange) {
                             this.$store.dispatch(
                                 'artists/learnTaste',
-                                'medium',
+                                mutation.payload.timeRange,
                             );
                         }
                         break;
@@ -81,15 +87,6 @@ export default class Learning extends Vue {
 </script>
 
 <style scoped>
-h1 {
-    font-size: 2em;
-    margin: 0.5em 0 0 0;
-}
-
-i {
-    color: #207bbf;
-}
-
 .content {
     margin: auto;
     max-width: 860px;
