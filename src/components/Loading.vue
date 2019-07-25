@@ -1,0 +1,35 @@
+<template>
+    <div class="container">
+        <LoadingAnimation />
+        <h2 class="status">
+            Learning...
+        </h2>
+    </div>
+</template>
+
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import LoadingAnimation from '@/components/LoadingAnimation.vue';
+
+@Component({
+    components: {
+        LoadingAnimation,
+    },
+})
+export default class FilterOptions extends Vue {
+}
+</script>
+
+<style scoped>
+.container {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.status {
+    display: inline-flex;
+    padding: 0 0 0 1em;
+    margin: 0;
+    flex: none;
+}
+</style>

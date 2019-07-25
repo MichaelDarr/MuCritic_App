@@ -1,6 +1,7 @@
 <template>
     <div>
         <SmallLogo />
+        <Loading />
         <FilterOptions />
         <div class="content">
             <div class="albums">
@@ -22,6 +23,7 @@ import { Album } from '../store/albums/types';
 import AlbumBox from '@/components/Album.vue';
 import FilterOptions from '@/components/FilterOptions.vue';
 import SmallLogo from '@/components/SmallLogo.vue';
+import Loading from '@/components/Loading.vue';
 
 const { mapState } = createNamespacedHelpers('artists');
 
@@ -29,6 +31,7 @@ const { mapState } = createNamespacedHelpers('artists');
     components: {
         AlbumBox,
         FilterOptions,
+        Loading,
         SmallLogo,
     },
     computed: {
