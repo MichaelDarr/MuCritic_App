@@ -4,6 +4,7 @@ export interface ArtistsState {
     short: MuArtist[];
     medium: MuArtist[];
     long: MuArtist[];
+    bucket: TimeRangeBucket;
 }
 
 export interface MuArtist extends Spotify.Artist {

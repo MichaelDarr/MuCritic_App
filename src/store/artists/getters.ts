@@ -1,5 +1,9 @@
 import { GetterTree } from 'vuex';
-import { ArtistsState, BucketBools } from './types';
+import {
+    ArtistsState,
+    BucketBools,
+    TimeRangeBucket,
+} from './types';
 import { RootState } from '../types';
 
 
@@ -21,5 +25,8 @@ export const getters: GetterTree<ArtistsState, RootState> = {
         if(state.medium.length > 0 && state.medium[0].encoded != null) bools.medium = true;
         if(state.long.length > 0 && state.long[0].encoded != null) bools.long = true;
         return bools;
+    },
+    bucket(state): TimeRangeBucket {
+        return state.bucket;
     },
 };

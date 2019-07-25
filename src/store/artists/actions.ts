@@ -33,11 +33,8 @@ export const actions: ActionTree<ArtistsState, RootState> = {
         );
         commit('setEncodings', { encodedArtists, timeRange: payload });
     },
-    async learnTaste(
-        { commit, state },
-        payload: TimeRangeBucket,
-    ): Promise<void> {
-        const artists = state[payload].slice(0, 5);
+    async learnTaste({ commit, state }): Promise<void> {
+        const artists = state[state.bucket].slice(0, 5);
         const encodedArtists = artists.map((artist: MuArtist): EncodedArtist => {
             const encoding = artist.encoded;
             if(encoding == null) throw new Error('Tried to learn taste from unencoded artist.');

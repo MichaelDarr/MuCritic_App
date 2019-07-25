@@ -1,9 +1,12 @@
 <template>
     <div class="filter-options">
         <div class="artist-time-period">
-            <label for="time-period">Favorite Artists From</label>
+            <label for="time-period">Use Favorite Artists From</label>
             <br>
-            <select id="time-period">
+            <select
+                id="time-period"
+                v-model="selected"
+            >
                 <option value="short">
                     This Month
                 </option>
@@ -19,10 +22,18 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Watch, Vue } from 'vue-property-decorator';
+import { TimeRangeBucket } from '../store/artists/types';
 
 @Component({})
-export default class FilterOptions extends Vue {}
+export default class FilterOptions extends Vue {
+    selected: TimeRangeBucket = this.$store.getters['artists/bucket'];
+
+    @Watch('selected')
+    newTimeRangeSelected(bucket: TimeRangeBucket) {
+        this.$store.commit('artists/setBucket', bucket);
+    }
+}
 </script>
 
 <style scoped>

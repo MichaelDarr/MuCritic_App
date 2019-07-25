@@ -31,4 +31,7 @@ export const mutations: MutationTree<ArtistsState> = {
             state[payload.timeRange][index].encoded = encodedArtist;
         });
     },
+    setBucket(state, payload: TimeRangeBucket): void {
+        state.bucket = payload;
+    },
 };

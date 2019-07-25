@@ -9,6 +9,7 @@ export const state: ArtistsState = {
     short: [],
     medium: [],
     long: [],
+    bucket: 'medium',
 };
 
 const namespaced = true;

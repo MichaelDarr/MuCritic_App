@@ -16,13 +16,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { createNamespacedHelpers } from 'vuex';
 import { Component } from 'vue-property-decorator';
 import { Album } from '../store/albums/types';
-import { TimeRangeBucket } from '../store/artists/types';
 import AlbumBox from '@/components/Album.vue';
 import FilterOptions from '@/components/FilterOptions.vue';
 import SmallLogo from '@/components/SmallLogo.vue';
 
+const { mapState } = createNamespacedHelpers('artists');
 
 @Component({
     components: {
@@ -30,11 +31,16 @@ import SmallLogo from '@/components/SmallLogo.vue';
         FilterOptions,
         SmallLogo,
     },
+    computed: {
+        ...mapState([
+            'bucket',
+        ]),
+    },
 })
 export default class Learning extends Vue {
     albums: Album[] = [];
 
-    intialTimeRange: TimeRangeBucket = 'medium';
+    private 'bucket': string;
 
     mounted() {
         this.$store.dispatch('albums/fetch');
@@ -43,16 +49,20 @@ export default class Learning extends Vue {
         this.$store.dispatch('spotify/requestArtists', 'medium');
         this.$store.dispatch('spotify/requestArtists', 'long');
 
-        const unsubscribe = this.$store.subscribe(
+        this.$store.subscribe(
             (mutation) => {
                 switch (mutation.type) {
                     case 'artists/setEncodings':
-                        if(mutation.payload.timeRange === this.intialTimeRange) {
+                        if(mutation.payload.timeRange === this.bucket) {
                             this.$store.dispatch(
                                 'artists/learnTaste',
-                                mutation.payload.timeRange,
                             );
                         }
+                        break;
+                    case 'artists/setBucket':
+                        this.$store.dispatch(
+                            'artists/learnTaste',
+                        );
                         break;
                     case 'albums/setScores':
                         this.$store.commit(
@@ -65,7 +75,6 @@ export default class Learning extends Vue {
                                 count: 20,
                             },
                         );
-                        unsubscribe();
                         break;
                     case 'setTasteModel':
                         this.$store.dispatch('albums/rate');
