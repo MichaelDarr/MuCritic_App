@@ -27,7 +27,6 @@ export class Encode {
         const favoriteArtistsTensor = favoriteArtistsEncoder.predict(artistTensor);
         let tasteTensor = tasteMapper.predict(favoriteArtistsTensor) as tf.Tensor;
         tasteTensor = tasteTensor.reshape([16, 1]);
-        tasteTensor = tasteTensor.mul(tf.scalar(-1));
         const model = tf.sequential();
         model.add(tf.layers.dense({
             inputShape: [16],

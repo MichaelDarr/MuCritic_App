@@ -8,7 +8,9 @@ import { RootState } from '../types';
 export const state: SpotifyState = {
     baseUrl: 'https://accounts.spotify.com/authorize',
     clientId: 'a01304edb42448d1aa31c3b255400130',
-    redirectUri: 'https://michaeldarr.github.io/mucritic-web/',
+    redirectUri: process.env.NODE_ENV === 'development'
+        ? 'http://localhost:8080/'
+        : 'https://michaeldarr.github.io/mucritic-web/',
     responseType: 'token',
     scope: 'user-top-read',
     api: null,
