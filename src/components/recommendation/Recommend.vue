@@ -1,20 +1,18 @@
 <template>
-    <div>
+    <div class="content">
         <SmallLogo />
         <Loading
             v-if="loading"
             :status="status"
         />
         <div v-else>
-            <FilterOptions />
-            <div class="content">
-                <div class="albums">
-                    <AlbumDisplay
-                        v-for="album in albums"
-                        :key="album.spotifyId"
-                        :album="album"
-                    />
-                </div>
+            <ArtistGallery />
+            <div class="albums">
+                <AlbumDisplay
+                    v-for="album in albums"
+                    :key="album.spotifyId"
+                    :album="album"
+                />
             </div>
         </div>
     </div>
@@ -24,11 +22,12 @@
 import Vue from 'vue';
 import { createNamespacedHelpers } from 'vuex';
 import { Component } from 'vue-property-decorator';
-import { Album } from '../store/albums/types';
-import AlbumDisplay from '@/components/AlbumDisplay.vue';
-import FilterOptions from '@/components/FilterOptions.vue';
-import SmallLogo from '@/components/SmallLogo.vue';
-import Loading from '@/components/Loading.vue';
+import AlbumDisplay from '@/components/recommendation/AlbumDisplay.vue';
+import ArtistGallery from '@/components/recommendation/ArtistGallery.vue';
+import SmallLogo from '@/components/recommendation/SmallLogo.vue';
+import Loading from '@/components/recommendation/Loading.vue';
+import { Album } from '@/store/albums/types';
+import { TimeRangeBucket } from '@/store/artists/types';
 
 const { mapState } = createNamespacedHelpers('artists');
 
@@ -38,13 +37,14 @@ export enum LearningStatus {
     learnTaste = 'learning your taste',
     rateAlbums = 'testing your taste on ~30,000 albums',
     loadSpotifyAlbums = 'importing data for top rated albums',
+    sortAlbums = 'sorting albums',
     complete = 'completed',
 }
 
 @Component({
     components: {
         AlbumDisplay,
-        FilterOptions,
+        ArtistGallery,
         Loading,
         SmallLogo,
     },
@@ -57,7 +57,7 @@ export enum LearningStatus {
 export default class Recommend extends Vue {
     albums: Album[] = [];
 
-    'bucket': string;
+    'bucket': TimeRangeBucket;
 
     status: LearningStatus = LearningStatus.loadAlbums;
 
@@ -110,6 +110,9 @@ export default class Recommend extends Vue {
                     case 'albums/setSpotifyInfo':
                         this.status = LearningStatus.complete;
                         break;
+                    case 'albums/setSortOrder':
+                        this.status = LearningStatus.complete;
+                        break;
                     case 'setTasteModel':
                         this.status = LearningStatus.rateAlbums;
                         this.$store.dispatch('albums/rate');
@@ -135,7 +138,7 @@ export default class Recommend extends Vue {
 .content {
     margin: auto;
     max-width: 860px;
-    padding: 30px 20px 20px 20px;
+    padding: 0 20px 20px 20px;
 }
 
 .albums {

@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import LoadingAnimation from '@/components/LoadingAnimation.vue';
+import LoadingAnimation from '@/components/recommendation/LoadingAnimation.vue';
 
 @Component({
     components: {

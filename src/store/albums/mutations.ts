@@ -3,6 +3,7 @@ import * as Spotify from 'spotify';
 import {
     Album,
     AlbumsState,
+    SortOrder,
 } from './types';
 
 export const mutations: MutationTree<AlbumsState> = {
@@ -11,6 +12,9 @@ export const mutations: MutationTree<AlbumsState> = {
     },
     setScores(state, payload: number[]): void {
         payload.forEach((score, i): void => { state.albums[i].userScore = score; });
+    },
+    setSortOrder(state, payload: SortOrder): void {
+        state.sortOrder = payload;
     },
     setSpotifyInfo(state, payload: {
         start: number;

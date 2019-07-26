@@ -2,6 +2,7 @@ import { GetterTree } from 'vuex';
 import {
     ArtistsState,
     BucketBools,
+    MuArtist,
     TimeRangeBucket,
 } from './types';
 import { RootState } from '../types';
@@ -28,5 +29,14 @@ export const getters: GetterTree<ArtistsState, RootState> = {
     },
     bucket(state): TimeRangeBucket {
         return state.bucket;
+    },
+    short(state): MuArtist[] {
+        return state.short;
+    },
+    medium(state): MuArtist[] {
+        return state.medium;
+    },
+    long(state): MuArtist[] {
+        return state.long;
     },
 };

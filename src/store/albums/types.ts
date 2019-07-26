@@ -1,5 +1,6 @@
 export interface AlbumsState {
     albums: Album[];
+    sortOrder: SortOrder;
 }
 
 export interface Album {
@@ -39,3 +40,7 @@ export type EncodedAlbum = [
     number,
     number,
 ];
+
+export type SortOrder =
+    | 'loved'
+    | 'hated'
