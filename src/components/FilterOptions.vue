@@ -81,7 +81,7 @@ select {
 
 option {
     font-size: 0.9em;
-    background-color: #111;
+    background-color: #fff;
     color: #000;
 }
 </style>
