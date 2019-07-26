@@ -12,7 +12,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { createNamespacedHelpers } from 'vuex';
 import Greeting from '@/components/Greeting.vue';
-import Recommend from '@/components/recommendation/Recommend.vue';
+import Recommend from '@/components/Recommend.vue';
 import SpotifyLogin from '@/components/SpotifyLogin.vue';
 
 const { mapState } = createNamespacedHelpers('spotify');

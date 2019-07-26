@@ -40,7 +40,7 @@ export const actions: ActionTree<ArtistsState, RootState> = {
             if(encoding == null) throw new Error('Tried to learn taste from unencoded artist.');
             return encoding;
         });
-        const tasteModel = await Encode.taste(encodedArtists);
-        commit('setTasteModel', tasteModel, { root: true });
+        const tasteModels = await Encode.taste(encodedArtists);
+        commit('setTasteModels', tasteModels, { root: true });
     },
 };

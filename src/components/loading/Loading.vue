@@ -9,14 +9,14 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import LoadingAnimation from '@/components/recommendation/LoadingAnimation.vue';
+import LoadingAnimation from '@/components/loading/LoadingAnimation.vue';
 
 @Component({
     components: {
         LoadingAnimation,
     },
 })
-export default class FilterOptions extends Vue {
+export default class Loading extends Vue {
     @Prop(String) readonly status!: string;
 }
 </script>

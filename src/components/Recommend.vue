@@ -7,13 +7,9 @@
         />
         <div v-else>
             <ArtistGallery />
-            <div class="albums">
-                <AlbumDisplay
-                    v-for="album in albums"
-                    :key="album.spotifyId"
-                    :album="album"
-                />
-            </div>
+            <AlbumGallery
+                :albums="albums"
+            />
         </div>
     </div>
 </template>
@@ -22,10 +18,10 @@
 import Vue from 'vue';
 import { createNamespacedHelpers } from 'vuex';
 import { Component } from 'vue-property-decorator';
-import AlbumDisplay from '@/components/recommendation/AlbumDisplay.vue';
-import ArtistGallery from '@/components/recommendation/ArtistGallery.vue';
-import SmallLogo from '@/components/recommendation/SmallLogo.vue';
-import Loading from '@/components/recommendation/Loading.vue';
+import AlbumGallery from '@/components/galleries/AlbumGallery.vue';
+import ArtistGallery from '@/components/galleries/ArtistGallery.vue';
+import SmallLogo from '@/components/SmallLogo.vue';
+import Loading from '@/components/loading/Loading.vue';
 import { Album } from '@/store/albums/types';
 import { TimeRangeBucket } from '@/store/artists/types';
 
@@ -43,7 +39,7 @@ export enum LearningStatus {
 
 @Component({
     components: {
-        AlbumDisplay,
+        AlbumGallery,
         ArtistGallery,
         Loading,
         SmallLogo,
@@ -111,9 +107,19 @@ export default class Recommend extends Vue {
                         this.status = LearningStatus.complete;
                         break;
                     case 'albums/setSortOrder':
-                        this.status = LearningStatus.complete;
+                        this.status = LearningStatus.loadSpotifyAlbums;
+                        this.$store.commit(
+                            'albums/sort',
+                        );
+                        this.$store.dispatch(
+                            'spotify/requestAlbums',
+                            {
+                                start: 0,
+                                count: 20,
+                            },
+                        );
                         break;
-                    case 'setTasteModel':
+                    case 'setTasteModels':
                         this.status = LearningStatus.rateAlbums;
                         this.$store.dispatch('albums/rate');
                         break;
@@ -139,14 +145,6 @@ export default class Recommend extends Vue {
     margin: auto;
     max-width: 860px;
     padding: 0 20px 20px 20px;
-}
-
-.albums {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    display: inline-flex;
-    flex-direction: row;
     flex-wrap: wrap;
 }
 </style>

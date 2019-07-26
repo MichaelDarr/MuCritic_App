@@ -60,6 +60,7 @@ export const actions: ActionTree<AlbumsState, RootState> = {
                     Number(rowData[25]),
                 ],
                 userScore: null,
+                userScoreAdjusted: null,
                 imageUrl: null,
                 spotifyUrl: null,
                 name: null,
@@ -73,18 +74,32 @@ export const actions: ActionTree<AlbumsState, RootState> = {
         rootState,
         state,
     }): Promise<void> {
-        if(rootState.tasteModel == null) throw new Error('Tried to rate albums before model creation');
+        if(
+            rootState.tasteModel == null
+            || rootState.tasteModelAdjusted == null
+        ) throw new Error('Tried to rate albums before model creation');
         if(state.albums == null) throw new Error('No albums to rate');
 
         const model: tf.Sequential = rootState.tasteModel;
+        const adjustedModel: tf.Sequential = rootState.tasteModelAdjusted;
         const { albums } = state;
 
         const encodings = albums.map((album): EncodedAlbum => album.encoding);
         const dataTensor = tf.tensor2d(encodings, [encodings.length, 16]);
+
         const scoreTensor = model.predict(dataTensor) as tf.Tensor;
         const scoresRaw = await scoreTensor.array() as number[][];
-        const scores = scoresRaw.map((scoreArr): number => scoreArr[0]);
+        const scores = scoresRaw.map(
+            (scoreArr): number => Math.max(Math.min(((scoreArr[0] * 4.5) + 0.5) * 2, 10), 0),
+        );
 
-        commit('setScores', scores);
+        const scoreTensorAdjusted = adjustedModel.predict(dataTensor) as tf.Tensor;
+        const scoresRawAdjusted = await scoreTensorAdjusted.array() as number[][];
+        const scoresAdjusted = scoresRawAdjusted.map((adjScoreArr): number => adjScoreArr[0]);
+
+        commit('setScores', {
+            scores,
+            scoresAdjusted,
+        });
     },
 };

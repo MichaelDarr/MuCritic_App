@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
-import { TimeRangeBucket } from '../../store/artists/types';
+import { TimeRangeBucket } from '@/store/artists/types';
 
 @Component({})
 export default class TimeRange extends Vue {
@@ -41,14 +41,10 @@ export default class TimeRange extends Vue {
 }
 </script>
 
-<style>
+<style scoped>
 .favorite-text {
     font-weight: 600;
     text-transform: uppercase;
-}
-
-.filter-options {
-    display: inline-flex;
 }
 
 .select-label-pair {

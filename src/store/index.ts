@@ -17,6 +17,7 @@ const store: StoreOptions<RootState> = {
         errorLog: [],
         miscLog: [],
         tasteModel: null,
+        tasteModelAdjusted: null,
     },
     modules: {
         albums,
@@ -31,6 +32,13 @@ const store: StoreOptions<RootState> = {
             }
             return null;
         },
+        tasteAdjustedRaw(state): any {
+            const tasteArr: number[] = [];
+            if(state.tasteModelAdjusted != null) {
+                return state.tasteModelAdjusted.getLayer('perceptron').weights[0].read().arraySync();
+            }
+            return null;
+        },
     },
     mutations: {
         logError(state, payload: Log): void {
@@ -39,8 +47,12 @@ const store: StoreOptions<RootState> = {
         logMisc(state, payload: Log): void {
             state.miscLog.push(payload);
         },
-        setTasteModel(state, payload: Sequential): void {
-            state.tasteModel = payload;
+        setTasteModels(state, payload: {
+            model: Sequential;
+            adjustedModel: Sequential;
+        }): void {
+            state.tasteModel = payload.model;
+            state.tasteModelAdjusted = payload.adjustedModel;
         },
     },
 };

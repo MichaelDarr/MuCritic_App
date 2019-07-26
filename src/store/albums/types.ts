@@ -16,6 +16,7 @@ export interface Album {
     artistPopularity: number;
     encoding: EncodedAlbum;
     userScore: number | null;
+    userScoreAdjusted: number | null;
     imageUrl: string | null;
     spotifyUrl: string | null;
     name: string | null;
@@ -42,5 +43,5 @@ export type EncodedAlbum = [
 ];
 
 export type SortOrder =
-    | 'loved'
-    | 'hated'
+    | 'Love'
+    | 'Hate'

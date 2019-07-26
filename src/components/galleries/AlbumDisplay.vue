@@ -23,7 +23,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
-import { Album } from '../../store/albums/types';
+import { Album } from '@/store/albums/types';
 
 
 @Component({})

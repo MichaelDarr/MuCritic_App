@@ -9,4 +9,5 @@ export interface RootState {
     errorLog: Log[];
     miscLog: Log[];
     tasteModel: Sequential | null;
+    tasteModelAdjusted: Sequential | null;
 }

@@ -15,7 +15,7 @@
 import Vue from 'vue';
 import { createNamespacedHelpers } from 'vuex';
 import { Component } from 'vue-property-decorator';
-import ArtistDisplay from '@/components/recommendation/ArtistDisplay.vue';
+import ArtistDisplay from '@/components/galleries/ArtistDisplay.vue';
 import TimeRange from '@/components/filters/TimeRange.vue';
 import {
     MuArtist,
@@ -46,14 +46,14 @@ export default class ArtistGallery extends Vue {
 </script>
 
 <style scoped>
-.artist-display-container {
-    display: inline-flex;
-}
-
 .artists {
     width: 100%;
     margin: 0;
     padding: 0;
+}
+
+.artist-display-container {
+    display: inline-flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;

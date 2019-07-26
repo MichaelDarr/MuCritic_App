@@ -15,7 +15,10 @@ export class Encode {
         return encodedArtist[0];
     }
 
-    public static async taste(encodedArtists: EncodedArtist[]): Promise<tf.Sequential> {
+    public static async taste(encodedArtists: EncodedArtist[]): Promise<{
+        model: tf.Sequential;
+        adjustedModel: tf.Sequential;
+    }> {
         if(encodedArtists.length < 5) throw new Error('taste encoder must be passed 5 artists');
         const models = Models.getInstance();
         const favoriteArtistsEncoder = await models.favoriteArtistsEncoder();
@@ -27,6 +30,26 @@ export class Encode {
         const favoriteArtistsTensor = favoriteArtistsEncoder.predict(artistTensor);
         let tasteTensor = tasteMapper.predict(favoriteArtistsTensor) as tf.Tensor;
         tasteTensor = tasteTensor.reshape([16, 1]);
+        const rymTaste = tf.tensor2d([
+            [-0.2658042312],
+            [-0.2918781042],
+            [0.4476911426],
+            [0.0354586020],
+            [0.1686497927],
+            [0.2152237296],
+            [-0.4066027105],
+            [0.1940803975],
+            [0.0597865917],
+            [0.4049637318],
+            [-0.0558041073],
+            [-0.2366468459],
+            [0.0106893238],
+            [-0.4115174115],
+            [0.1501134783],
+            [-0.2174658924],
+        ]);
+        const adjustedTasteTensor = tf.sub(tasteTensor, rymTaste);
+
         const model = tf.sequential();
         model.add(tf.layers.dense({
             inputShape: [16],
@@ -35,7 +58,19 @@ export class Encode {
             useBias: false,
             weights: [tasteTensor],
         }));
-        return model;
+
+        const adjustedModel = tf.sequential();
+        adjustedModel.add(tf.layers.dense({
+            inputShape: [16],
+            name: 'perceptron',
+            units: 1,
+            useBias: false,
+            weights: [adjustedTasteTensor],
+        }));
+        return {
+            model,
+            adjustedModel,
+        };
     }
 
     public static async track(

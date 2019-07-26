@@ -10,8 +10,16 @@ export const mutations: MutationTree<AlbumsState> = {
     setAlbums(state, payload: Album[]): void {
         state.albums = payload;
     },
-    setScores(state, payload: number[]): void {
-        payload.forEach((score, i): void => { state.albums[i].userScore = score; });
+    setScores(state, payload: {
+        scores: number[];
+        scoresAdjusted: number[];
+    }): void {
+        payload.scores.forEach((score, i): void => {
+            state.albums[i].userScore = score;
+        });
+        payload.scoresAdjusted.forEach((score, i): void => {
+            state.albums[i].userScoreAdjusted = score;
+        });
     },
     setSortOrder(state, payload: SortOrder): void {
         state.sortOrder = payload;
@@ -41,8 +49,11 @@ export const mutations: MutationTree<AlbumsState> = {
     },
     sort(state): void {
         state.albums.sort((a, b): number => {
-            if(b.userScore == null || a.userScore == null) return -1;
-            return b.userScore - a.userScore;
+            if(b.userScoreAdjusted == null || a.userScoreAdjusted == null) return -1;
+            if(state.sortOrder === 'Love') {
+                return b.userScoreAdjusted - a.userScoreAdjusted;
+            }
+            return a.userScoreAdjusted - b.userScoreAdjusted;
         });
     },
 };
