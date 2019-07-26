@@ -82,7 +82,7 @@ export const actions: ActionTree<AlbumsState, RootState> = {
         const encodings = albums.map((album): EncodedAlbum => album.encoding);
         const dataTensor = tf.tensor2d(encodings, [encodings.length, 16]);
         const scoreTensor = model.predict(dataTensor) as tf.Tensor;
-        const scoresRaw = scoreTensor.arraySync() as number[][];
+        const scoresRaw = await scoreTensor.array() as number[][];
         const scores = scoresRaw.map((scoreArr): number => scoreArr[0]);
 
         commit('setScores', scores);

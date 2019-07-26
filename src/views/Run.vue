@@ -1,6 +1,6 @@
 <template>
   <div v-if="apiIsLoaded">
-    <Learning />
+    <Recommend />
   </div>
   <div v-else>
     <Greeting />
@@ -11,16 +11,16 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { createNamespacedHelpers } from 'vuex';
-import Learning from '@/components/Learning.vue';
 import Greeting from '@/components/Greeting.vue';
+import Recommend from '@/components/Recommend.vue';
 import SpotifyLogin from '@/components/SpotifyLogin.vue';
 
 const { mapState } = createNamespacedHelpers('spotify');
 
 @Component({
     components: {
-        Learning,
         Greeting,
+        Recommend,
         SpotifyLogin,
     },
     computed: {

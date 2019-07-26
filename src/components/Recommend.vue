@@ -54,7 +54,7 @@ export enum LearningStatus {
         ]),
     },
 })
-export default class Learning extends Vue {
+export default class Recommend extends Vue {
     albums: Album[] = [];
 
     'bucket': string;
