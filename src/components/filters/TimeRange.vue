@@ -39,15 +39,16 @@ export default class TimeRange extends Vue {
 
 <style scoped>
 .select-label-pair {
-    align-items: baseline;
+    align-items: center;
     display: inline-flex;
     flex-direction: column;
     margin: 0.5em 0 1em 0;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 530px) {
     .select-label-pair {
         flex-direction: row;
+        align-items: baseline;
     }
 }
 

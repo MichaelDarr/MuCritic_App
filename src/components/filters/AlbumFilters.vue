@@ -130,14 +130,23 @@ export default class AlbumFilters extends Vue {
 <style scoped>
 .filter-container {
     display: flex;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 1em;
 }
 
 .select-label-pair {
     display: flex;
     flex-direction: column;
     margin: 2em 0 1em 0;
-    text-align: left;
+    text-align: center;
+    flex-basis: 50%;
+}
+
+@media (min-width: 750px) {
+    .select-label-pair {
+        flex-basis: 25%;
+    }
 }
 
 .select {
@@ -145,7 +154,7 @@ export default class AlbumFilters extends Vue {
     height: 2em;
     overflow: hidden;
     width: 85px;
-    margin: 4px 0 0 -6px;
+    margin: 0 auto;
 }
 
 .release-decade-select {

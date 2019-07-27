@@ -35,15 +35,12 @@ export default class AlbumDisplay extends Vue {
 
 <style scoped>
 .album-container-outer {
-    flex-basis: 100%;
-    font-size: 1.4em;
-    margin: 0;
-    overflow: hidden;
+    flex-basis: 50%;
+    font-size: 0.8em;
 }
 
-@media (min-width: 400px) {
+@media (min-width: 550px) {
     .album-container-outer {
-        flex-basis: 50%;
         font-size: 1em;
     }
 }
