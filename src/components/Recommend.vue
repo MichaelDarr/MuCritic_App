@@ -106,20 +106,10 @@ export default class Recommend extends Vue {
                     case 'albums/setSpotifyInfo':
                         this.status = LearningStatus.complete;
                         break;
-                    case 'albums/setSortOrder':
-                        this.status = LearningStatus.loadSpotifyAlbums;
-                        this.$store.commit(
-                            'albums/sort',
-                        );
-                        this.$store.dispatch(
-                            'spotify/requestAlbums',
-                            {
-                                start: 0,
-                                count: 20,
-                            },
-                        );
-                        break;
+                    case 'albums/setPopularity':
+                    case 'albums/setReleaseDecade':
                     case 'albums/setReception':
+                    case 'albums/setSortOrder':
                         this.status = LearningStatus.loadSpotifyAlbums;
                         this.$store.commit(
                             'albums/sort',

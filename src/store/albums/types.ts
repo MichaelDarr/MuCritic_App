@@ -3,6 +3,8 @@ export interface AlbumsState {
     filteredAlbums: Album[];
     sortOrder: SortOrder;
     reception: Reception;
+    releaseDecade: Decade;
+    popularity: Popularity;
 }
 
 export interface Album {
@@ -50,8 +52,21 @@ export type SortOrder =
 
 export type Reception =
     | 'All'
-    | 'Classic'
     | 'Respected'
     | 'Average'
     | 'Poor'
-    | 'Garbage'
+
+export type Popularity =
+    | 'All'
+    | 'Popular'
+    | 'Average'
+    | 'Niche'
+
+export type Decade =
+    | '2010s'
+    | '2000s'
+    | '1990s'
+    | '1980s'
+    | '1970s'
+    | 'All'
+    | 'Earlier'

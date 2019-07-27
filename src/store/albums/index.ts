@@ -10,6 +10,8 @@ export const state: AlbumsState = {
     filteredAlbums: [],
     sortOrder: 'Love',
     reception: 'All',
+    releaseDecade: '2010s',
+    popularity: 'All',
 };
 
 const namespaced = true;

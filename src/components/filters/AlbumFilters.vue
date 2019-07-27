@@ -26,9 +26,6 @@
                     <option value="All">
                         All
                     </option>
-                    <option value="Classic">
-                        Fire
-                    </option>
                     <option value="Respected">
                         Spicy
                     </option>
@@ -38,8 +35,58 @@
                     <option value="Poor">
                         Mild
                     </option>
-                    <option value="Garbage">
-                        Bland
+                </select>
+            </div>
+        </div>
+        <div class="select-label-pair">
+            <label for="release-decade">Release Decade</label>
+            <div class="select">
+                <select
+                    id="release-decade"
+                    v-model="releaseDecade"
+                >
+                    <option value="All">
+                        All
+                    </option>
+                    <option value="2010s">
+                        2010's
+                    </option>
+                    <option value="2000s">
+                        2000's
+                    </option>
+                    <option value="1990s">
+                        1990's
+                    </option>
+                    <option value="1980s">
+                        1980's
+                    </option>
+                    <option value="1970s">
+                        1970's
+                    </option>
+                    <option value="Earlier">
+                        Before 1970
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="select-label-pair">
+            <label for="popularity">Popularity</label>
+            <div class="select">
+                <select
+                    id="popularity"
+                    v-model="popularity"
+                >
+                    <option value="All">
+                        All
+                    </option>
+                    <option value="Popular">
+                        Popular
+                    </option>
+                    <option value="Average">
+                        Average
+                    </option>
+                    <option value="Niche">
+                        Niche
                     </option>
                 </select>
             </div>
@@ -49,13 +96,22 @@
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
-import { Reception, SortOrder } from '@/store/albums/types';
+import {
+    Decade,
+    Popularity,
+    Reception,
+    SortOrder,
+} from '@/store/albums/types';
 
 @Component({})
 export default class AlbumFilters extends Vue {
     sortOrder: SortOrder = this.$store.getters['albums/sortOrder'];
 
     criticalReception: Reception = this.$store.getters['albums/reception'];
+
+    releaseDecade: Decade = this.$store.getters['albums/releaseDecade'];
+
+    popularity: Popularity = this.$store.getters['albums/popularity'];
 
     @Watch('sortOrder')
     sortOrderSelected(sortOrder: SortOrder) {
@@ -65,6 +121,16 @@ export default class AlbumFilters extends Vue {
     @Watch('criticalReception')
     receptionSelected(criticalReception: Reception) {
         this.$store.commit('albums/setReception', criticalReception);
+    }
+
+    @Watch('releaseDecade')
+    decadeSelected(releaseDecade: SortOrder) {
+        this.$store.commit('albums/setReleaseDecade', releaseDecade);
+    }
+
+    @Watch('popularity')
+    popularitySelected(popularity: Popularity) {
+        this.$store.commit('albums/setPopularity', popularity);
     }
 }
 </script>

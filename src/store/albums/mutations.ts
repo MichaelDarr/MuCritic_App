@@ -3,6 +3,8 @@ import * as Spotify from 'spotify';
 import {
     Album,
     AlbumsState,
+    Decade,
+    Popularity,
     Reception,
     SortOrder,
 } from './types';
@@ -17,6 +19,9 @@ export const mutations: MutationTree<AlbumsState> = {
         state.albums = payload;
         state.filteredAlbums = payload;
     },
+    setPopularity(state, payload: Popularity): void {
+        state.popularity = payload;
+    },
     setScores(state, payload: {
         scores: number[];
         scoresAdjusted: number[];
@@ -30,6 +35,9 @@ export const mutations: MutationTree<AlbumsState> = {
     },
     setReception(state, payload: Reception): void {
         state.reception = payload;
+    },
+    setReleaseDecade(state, payload: Decade): void {
+        state.releaseDecade = payload;
     },
     setSortOrder(state, payload: SortOrder): void {
         state.sortOrder = payload;
@@ -60,33 +68,86 @@ export const mutations: MutationTree<AlbumsState> = {
         });
     },
     sort(state): void {
-        const { sortOrder, reception } = state;
+        const {
+            popularity,
+            reception,
+            releaseDecade,
+            sortOrder,
+        } = state;
+        let filteredAlbums = state.albums;
         switch(reception) {
-            case 'Classic':
-                state.filteredAlbums = state.albums.filter(album => album.rymRating > 4.2);
-                break;
             case 'Respected':
-                state.filteredAlbums = state.albums.filter(
-                    (album): boolean => album.rymRating <= 4.2 && album.rymRating > 3.5,
+                filteredAlbums = filteredAlbums.filter(
+                    (album): boolean => album.rymRating > 4,
                 );
                 break;
             case 'Average':
-                state.filteredAlbums = state.albums.filter(
-                    (album): boolean => album.rymRating <= 3.5 && album.rymRating > 2.5,
+                filteredAlbums = filteredAlbums.filter(
+                    (album): boolean => album.rymRating <= 4 && album.rymRating > 2.7,
                 );
                 break;
             case 'Poor':
-                state.filteredAlbums = state.albums.filter(
-                    (album): boolean => album.rymRating <= 2.5 && album.rymRating > 1.5,
+                filteredAlbums = filteredAlbums.filter(
+                    (album): boolean => album.rymRating <= 2.7,
                 );
                 break;
-            case 'Garbage':
-                state.filteredAlbums = state.albums.filter(album => album.rymRating <= 1.5);
+            default:
+        }
+
+        switch(releaseDecade) {
+            case '2010s':
+                filteredAlbums = filteredAlbums.filter(
+                    (album): boolean => album.releaseYear >= 2010,
+                );
+                break;
+            case '2000s':
+                filteredAlbums = filteredAlbums.filter(
+                    (album): boolean => album.releaseYear < 2010 && album.releaseYear >= 2000,
+                );
+                break;
+            case '1990s':
+                filteredAlbums = filteredAlbums.filter(
+                    (album): boolean => album.releaseYear < 2000 && album.releaseYear >= 1990,
+                );
+                break;
+            case '1980s':
+                filteredAlbums = filteredAlbums.filter(
+                    (album): boolean => album.releaseYear < 1990 && album.releaseYear >= 1980,
+                );
+                break;
+            case '1970s':
+                filteredAlbums = filteredAlbums.filter(
+                    (album): boolean => album.releaseYear < 1980 && album.releaseYear >= 1970,
+                );
+                break;
+            case 'Earlier':
+                filteredAlbums = filteredAlbums.filter(
+                    (album): boolean => album.releaseYear < 1970,
+                );
                 break;
             default:
-                state.filteredAlbums = state.albums;
         }
-        state.filteredAlbums.sort((a, b): number => {
+
+        switch(popularity) {
+            case 'Popular':
+                filteredAlbums = filteredAlbums.filter(
+                    (album): boolean => album.popularity >= 40,
+                );
+                break;
+            case 'Average':
+                filteredAlbums = filteredAlbums.filter(
+                    (album): boolean => album.popularity < 40 && album.popularity >= 20,
+                );
+                break;
+            case 'Niche':
+                filteredAlbums = filteredAlbums.filter(
+                    (album): boolean => album.popularity < 20,
+                );
+                break;
+            default:
+        }
+
+        state.filteredAlbums = filteredAlbums.sort((a, b): number => {
             switch(sortOrder) {
                 case 'Hate':
                     return ratingTaste(a) - ratingTaste(b);
