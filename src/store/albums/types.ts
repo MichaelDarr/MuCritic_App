@@ -63,10 +63,7 @@ export type Popularity =
     | 'Niche'
 
 export type Decade =
-    | '2010s'
-    | '2000s'
-    | '1990s'
-    | '1980s'
-    | '1970s'
     | 'All'
-    | 'Earlier'
+    | 'New'
+    | 'Medium'
+    | 'Old'

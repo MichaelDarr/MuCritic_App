@@ -39,32 +39,24 @@
             </div>
         </div>
         <div class="select-label-pair">
-            <label for="release-decade">Release Decade</label>
-            <div class="select">
+            <label for="release-decade">Release Window</label>
+            <div class="select release-decade-select">
                 <select
                     id="release-decade"
                     v-model="releaseDecade"
+                    class="release-decade-select-inner"
                 >
                     <option value="All">
-                        All
+                        All Time
                     </option>
-                    <option value="2010s">
-                        2010's
+                    <option value="New">
+                        2000 - Present
                     </option>
-                    <option value="2000s">
-                        2000's
+                    <option value="Medium">
+                        1980 - 1999
                     </option>
-                    <option value="1990s">
-                        1990's
-                    </option>
-                    <option value="1980s">
-                        1980's
-                    </option>
-                    <option value="1970s">
-                        1970's
-                    </option>
-                    <option value="Earlier">
-                        Before 1970
+                    <option value="Old">
+                        Before 1980
                     </option>
                 </select>
             </div>
@@ -155,6 +147,10 @@ export default class AlbumFilters extends Vue {
     margin: 4px 0 0 -6px;
 }
 
+.release-decade-select {
+    width: 145px;
+}
+
 .select:hover {
     background: url(https://michaeldarr.github.io/mucritic-web/select_arrow_down_blue.png) no-repeat 96% 0;
 }
@@ -171,6 +167,10 @@ select {
     border: 0px;
     outline: 0px;
     margin-left: 2px;
+}
+
+.release-decade-select-inner {
+    width: 155px;
 }
 
 option {

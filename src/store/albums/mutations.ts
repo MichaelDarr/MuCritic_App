@@ -95,34 +95,19 @@ export const mutations: MutationTree<AlbumsState> = {
         }
 
         switch(releaseDecade) {
-            case '2010s':
+            case 'New':
                 filteredAlbums = filteredAlbums.filter(
-                    (album): boolean => album.releaseYear >= 2010,
+                    (album): boolean => album.releaseYear >= 2000,
                 );
                 break;
-            case '2000s':
+            case 'Medium':
                 filteredAlbums = filteredAlbums.filter(
-                    (album): boolean => album.releaseYear < 2010 && album.releaseYear >= 2000,
+                    (album): boolean => album.releaseYear < 2000 && album.releaseYear >= 1980,
                 );
                 break;
-            case '1990s':
+            case 'Old':
                 filteredAlbums = filteredAlbums.filter(
-                    (album): boolean => album.releaseYear < 2000 && album.releaseYear >= 1990,
-                );
-                break;
-            case '1980s':
-                filteredAlbums = filteredAlbums.filter(
-                    (album): boolean => album.releaseYear < 1990 && album.releaseYear >= 1980,
-                );
-                break;
-            case '1970s':
-                filteredAlbums = filteredAlbums.filter(
-                    (album): boolean => album.releaseYear < 1980 && album.releaseYear >= 1970,
-                );
-                break;
-            case 'Earlier':
-                filteredAlbums = filteredAlbums.filter(
-                    (album): boolean => album.releaseYear < 1970,
+                    (album): boolean => album.releaseYear < 1980,
                 );
                 break;
             default:
