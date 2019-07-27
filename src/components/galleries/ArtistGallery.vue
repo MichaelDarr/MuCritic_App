@@ -57,5 +57,6 @@ export default class ArtistGallery extends Vue {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    width: 100%;
 }
 </style>

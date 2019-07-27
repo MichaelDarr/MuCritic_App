@@ -90,7 +90,7 @@ export const actions: ActionTree<AlbumsState, RootState> = {
         const scoreTensor = model.predict(dataTensor) as tf.Tensor;
         const scoresRaw = await scoreTensor.array() as number[][];
         const scores = scoresRaw.map(
-            (scoreArr): number => Math.max(Math.min(((scoreArr[0] * 4.5) + 0.5) * 2, 10), 0),
+            (scoreArr): number => ((scoreArr[0] * 4.5) + 0.5) * 2,
         );
 
         const scoreTensorAdjusted = adjustedModel.predict(dataTensor) as tf.Tensor;

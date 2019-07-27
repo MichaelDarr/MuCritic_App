@@ -5,10 +5,10 @@
                 class="artist-art-link"
                 :href="artist.external_urls.spotify"
             >
-                <img
+                <div
                     class="artist-art"
-                    :src="artist.images[0].url"
-                >
+                    :style="{ 'background-image': `url(${artist.images[0].url})` }"
+                />
             </a>
             <p class="artist-name">
                 {{ artist.name }}
@@ -33,8 +33,9 @@ export default class ArtistDisplay extends Vue {
 <style scoped>
 .artist-container-outer {
     flex-basis: 33.3%;
-    font-size: 1.4em;
+    font-size: 1.1em;
     margin: 0;
+    overflow: hidden;
 }
 
 @media (min-width: 650px) {
@@ -51,13 +52,10 @@ export default class ArtistDisplay extends Vue {
 
 .artist-art {
     width: 100%;
+    padding: 100% 0 0 0;
+    background-size: cover;
     border-radius: 50%;
     margin-bottom: 1em;
-}
-
-.artist-art-link {
-    width: 100%;
-    height: 100%;
 }
 
 .artist-name {

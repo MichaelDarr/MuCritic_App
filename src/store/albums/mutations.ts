@@ -6,6 +6,18 @@ import {
     SortOrder,
 } from './types';
 
+function ratingTaste(
+    u: {
+        userScore: number | null;
+        userScoreAdjusted: number | null;
+    },
+    threshold?: number,
+): number {
+    if(u.userScoreAdjusted == null || u.userScore == null) return -1;
+    if(threshold != null && u.userScore < threshold) return -1;
+    return (Math.sqrt(u.userScore) / 35) + u.userScoreAdjusted;
+}
+
 export const mutations: MutationTree<AlbumsState> = {
     setAlbums(state, payload: Album[]): void {
         state.albums = payload;
@@ -48,12 +60,31 @@ export const mutations: MutationTree<AlbumsState> = {
         });
     },
     sort(state): void {
-        state.albums.sort((a, b): number => {
-            if(b.userScoreAdjusted == null || a.userScoreAdjusted == null) return -1;
-            if(state.sortOrder === 'Love') {
+        if(state.sortOrder === 'Acclaim') {
+            const highArr: Album[] = [];
+            const lowArr: Album[] = [];
+            state.albums.forEach((album): void => {
+                if(album.userScore != null && album.userScore > 7) highArr.push(album);
+                else lowArr.push(album);
+            });
+            highArr.sort((a, b): number => {
+                if(b.userScoreAdjusted == null || a.userScoreAdjusted == null) return -1;
                 return b.userScoreAdjusted - a.userScoreAdjusted;
+            });
+            lowArr.sort((a, b): number => {
+                if(b.userScoreAdjusted == null || a.userScoreAdjusted == null) return -1;
+                return b.userScoreAdjusted - a.userScoreAdjusted;
+            });
+            state.albums = highArr.concat(lowArr);
+            return;
+        }
+        state.albums.sort((a, b): number => {
+            switch(state.sortOrder) {
+                case 'Hate':
+                    return ratingTaste(a) - ratingTaste(b);
+                default:
+                    return ratingTaste(b) - ratingTaste(a);
             }
-            return a.userScoreAdjusted - b.userScoreAdjusted;
         });
     },
 };

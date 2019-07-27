@@ -9,6 +9,9 @@
                 <option value="Love">
                     Love
                 </option>
+                <option value="Acclaim">
+                    Acclaim
+                </option>
                 <option value="Hate">
                     Hate
                 </option>
@@ -44,7 +47,7 @@ export default class AlbumOrder extends Vue {
     background: url(/select_arrow_right_blue.png) no-repeat 96% 0;
     height: 2em;
     overflow: hidden;
-    width: 62px;
+    width: 85px;
     margin-top: 4px;
 }
 
@@ -59,7 +62,7 @@ label {
 select {
     background: transparent;
     font-size: 1em;
-    width: 72px;
+    width: 95px;
     color: #52baff;
     border: 0px;
     outline: 0px;

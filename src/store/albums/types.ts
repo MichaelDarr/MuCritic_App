@@ -45,3 +45,4 @@ export type EncodedAlbum = [
 export type SortOrder =
     | 'Love'
     | 'Hate'
+    | 'Acclaim'

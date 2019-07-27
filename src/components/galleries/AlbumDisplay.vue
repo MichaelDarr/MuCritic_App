@@ -5,10 +5,10 @@
                 class="album-art-link"
                 :href="album.spotifyUrl"
             >
-                <img
+                <div
                     class="album-art"
-                    :src="album.imageUrl"
-                >
+                    :style="{ 'background-image': `url(${album.imageUrl})` }"
+                />
             </a>
             <p class="album-name">
                 {{ album.name }}
@@ -38,6 +38,7 @@ export default class AlbumDisplay extends Vue {
     flex-basis: 100%;
     font-size: 1.4em;
     margin: 0;
+    overflow: hidden;
 }
 
 @media (min-width: 400px) {
@@ -69,13 +70,9 @@ export default class AlbumDisplay extends Vue {
 
 .album-art {
     width: 100%;
+    padding-top: 100%;
+    background-size: cover;
 }
-
-.album-art-link {
-    width: 100%;
-    height: 100%;
-}
-
 .album-name {
     margin-top: 5px;
     margin-bottom: 0;
