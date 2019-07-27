@@ -26,14 +26,12 @@ const store: StoreOptions<RootState> = {
     },
     getters: {
         tasteRaw(state): any {
-            const tasteArr: number[] = [];
             if(state.tasteModel != null) {
                 return state.tasteModel.getLayer('perceptron').weights[0].read().arraySync();
             }
             return null;
         },
         tasteAdjustedRaw(state): any {
-            const tasteArr: number[] = [];
             if(state.tasteModelAdjusted != null) {
                 return state.tasteModelAdjusted.getLayer('perceptron').weights[0].read().arraySync();
             }

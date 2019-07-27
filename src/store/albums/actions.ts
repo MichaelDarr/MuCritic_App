@@ -12,9 +12,7 @@ import { RootState } from '../types';
 export const actions: ActionTree<AlbumsState, RootState> = {
     async fetch({ commit }): Promise<void> {
         const csvRaw: string = await new Promise((resolve, reject): void => {
-            const url = process.env.NODE_ENV === 'development'
-                ? 'http://localhost:8080/album_data.csv'
-                : 'https://michaeldarr.github.io/mucritic-web/album_data.csv';
+            const url = 'https://michaeldarr.github.io/mucritic-web/album_data.csv';
             request(
                 url,
                 (error, response, body): void => {
