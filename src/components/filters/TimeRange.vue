@@ -52,7 +52,7 @@ export default class TimeRange extends Vue {
 }
 
 .select {
-    background: url(/select_arrow_right_blue.png) no-repeat 96% 0;
+    background: url(https://michaeldarr.github.io/mucritic-web/select_arrow_right_blue.png) no-repeat 96% 0;
     height: 2em;
     overflow: hidden;
     width: 180px;
@@ -60,7 +60,7 @@ export default class TimeRange extends Vue {
 }
 
 .select:hover {
-    background: url(/select_arrow_down_blue.png) no-repeat 96% 0;
+    background: url(https://michaeldarr.github.io/mucritic-web/select_arrow_down_blue.png) no-repeat 96% 0;
 }
 
 label {
