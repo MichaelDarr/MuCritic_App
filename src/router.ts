@@ -3,7 +3,6 @@ import Router from 'vue-router';
 import store from './store/index';
 import Run from './views/Run.vue';
 import About from './views/About.vue';
-import Contact from './views/Contact.vue';
 import NotFoundPage from './views/404.vue';
 import ErrorPage from './views/500.vue';
 
@@ -20,11 +19,6 @@ const router = new Router({
             path: '/about',
             name: 'about',
             component: About,
-        },
-        {
-            path: '/contact',
-            name: 'contact',
-            component: Contact,
         },
         {
             path: '/404',

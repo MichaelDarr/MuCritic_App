@@ -11,9 +11,7 @@
             id="spacer-middle"
             class="spacer"
         />
-        <router-link to="/contact">
-            Get in Touch
-        </router-link>
+        <a href="https://michaeldarr.github.io/#/contact">Get In Touch</a>
         <span class="spacer" />
         <a href="https://github.com/MichaelDarr/MuCritic">Source Code</a>
     </div>
