@@ -57,7 +57,7 @@ export const actions: ActionTree<SpotifyState, RootState> = {
         },
     ): Promise<void> {
         if(state.api != null) {
-            const albums: Album[] = rootGetters['albums/albums'];
+            const albums: Album[] = rootGetters['albums/filteredAlbums'];
             const ids = albums
                 .slice(payload.start, payload.start + payload.count)
                 .map((album): string => album.spotifyId);

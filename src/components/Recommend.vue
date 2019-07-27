@@ -143,7 +143,7 @@ export default class Recommend extends Vue {
         );
 
         this.$store.watch(
-            (_, getters) => getters['albums/albums'],
+            (_, getters) => getters['albums/filteredAlbums'],
             (newAlbums: Album[]) => {
                 this.albums = newAlbums.slice(0, 20);
             },

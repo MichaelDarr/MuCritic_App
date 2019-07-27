@@ -26,14 +26,20 @@
                     <option value="All">
                         All
                     </option>
+                    <option value="Classic">
+                        Fire
+                    </option>
                     <option value="Respected">
-                        Hot
+                        Spicy
                     </option>
                     <option value="Average">
                         Medium
                     </option>
-                    <option value="Panned">
+                    <option value="Poor">
                         Mild
+                    </option>
+                    <option value="Garbage">
+                        Bland
                     </option>
                 </select>
             </div>

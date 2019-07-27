@@ -12,6 +12,9 @@ export const getters: GetterTree<AlbumsState, RootState> = {
     albums(state): Album[] {
         return state.albums;
     },
+    filteredAlbums(state): Album[] {
+        return state.filteredAlbums;
+    },
     reception(state): Reception {
         return state.reception;
     },

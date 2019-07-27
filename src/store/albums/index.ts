@@ -7,6 +7,7 @@ import { getters } from './getters';
 
 export const state: AlbumsState = {
     albums: [],
+    filteredAlbums: [],
     sortOrder: 'Love',
     reception: 'All',
 };

@@ -7,30 +7,15 @@ import {
     SortOrder,
 } from './types';
 
-function ratingTaste(
-    u: Album,
-    reception?: Reception,
-): number {
+function ratingTaste(u: Album): number {
     if(u.userScoreAdjusted == null || u.userScore == null) return -1;
-    const score = (Math.sqrt(u.userScore) / 40) + u.userScoreAdjusted;
-    switch(reception) {
-        case 'Respected':
-            if(u.rymRating < 4) return score - 10;
-            break;
-        case 'Average':
-            if(u.rymRating > 4 || u.rymRating < 2) return score - 10;
-            break;
-        case 'Panned':
-            if(u.rymRating > 2) return score - 10;
-            break;
-        default:
-    }
-    return score;
+    return (Math.sqrt(u.userScore) / 40) + u.userScoreAdjusted;
 }
 
 export const mutations: MutationTree<AlbumsState> = {
     setAlbums(state, payload: Album[]): void {
         state.albums = payload;
+        state.filteredAlbums = payload;
     },
     setScores(state, payload: {
         scores: number[];
@@ -66,20 +51,49 @@ export const mutations: MutationTree<AlbumsState> = {
                     || Math.abs(finalImg.width) - imgWidth > Math.abs(nextImg.width - imgWidth)
                 ) finalImg = nextImg;
             });
-            state.albums[index + payload.start].imageUrl = finalImg.url;
-            state.albums[index + payload.start].spotifyUrl = spotifyAlbum.external_urls.spotify;
-            state.albums[index + payload.start].name = spotifyAlbum.name;
-            state.albums[index + payload.start].artist = spotifyAlbum.artists[0].name;
+            state.filteredAlbums[index + payload.start].imageUrl = finalImg.url;
+            state.filteredAlbums[index + payload.start].spotifyUrl = (
+                spotifyAlbum.external_urls.spotify
+            );
+            state.filteredAlbums[index + payload.start].name = spotifyAlbum.name;
+            state.filteredAlbums[index + payload.start].artist = spotifyAlbum.artists[0].name;
         });
     },
     sort(state): void {
-        const { reception } = state;
-        state.albums.sort((a, b): number => {
-            switch(state.sortOrder) {
+        const { sortOrder, reception } = state;
+        switch(reception) {
+            case 'Classic':
+                state.filteredAlbums = state.albums.filter(album => album.rymRating > 4.2);
+                break;
+            case 'Respected':
+                state.filteredAlbums = state.albums.filter(
+                    (album): boolean => album.rymRating <= 4.2 && album.rymRating > 3.5,
+                );
+                break;
+            case 'Average':
+                state.filteredAlbums = state.albums.filter(
+                    (album): boolean => album.rymRating <= 3.5 && album.rymRating > 2.5,
+                );
+                break;
+            case 'Poor':
+                state.filteredAlbums = state.albums.filter(
+                    (album): boolean => album.rymRating <= 2.5 && album.rymRating > 1.5,
+                );
+                break;
+            case 'Garbage':
+                state.filteredAlbums = state.albums.filter(album => album.rymRating <= 1.5);
+                break;
+            default:
+                state.filteredAlbums = state.albums;
+        }
+        state.filteredAlbums.sort((a, b): number => {
+            switch(sortOrder) {
                 case 'Hate':
-                    return ratingTaste(a, reception) - ratingTaste(b, reception);
+                    return ratingTaste(a) - ratingTaste(b);
+                case 'Love':
+                    return ratingTaste(b) - ratingTaste(a);
                 default:
-                    return ratingTaste(b, reception) - ratingTaste(a, reception);
+                    return -1;
             }
         });
     },

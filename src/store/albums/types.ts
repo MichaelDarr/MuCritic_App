@@ -1,5 +1,6 @@
 export interface AlbumsState {
     albums: Album[];
+    filteredAlbums: Album[];
     sortOrder: SortOrder;
     reception: Reception;
 }
@@ -49,6 +50,8 @@ export type SortOrder =
 
 export type Reception =
     | 'All'
+    | 'Classic'
     | 'Respected'
     | 'Average'
-    | 'Panned'
+    | 'Poor'
+    | 'Garbage'
