@@ -1,3 +1,3 @@
 <template>
-    <h1>About the model:</h1>
+    <h1>*magic*</h1>
 </template>
