@@ -9,6 +9,9 @@
                 :album="album"
             />
         </div>
+        <div class="loading-more-albums-animation">
+            <LoadingAnimation />
+        </div>
     </div>
 </template>
 
@@ -17,12 +20,14 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import AlbumDisplay from '@/components/galleries/AlbumDisplay.vue';
 import AlbumFilters from '@/components/filters/AlbumFilters.vue';
+import LoadingAnimation from '@/components/loading/LoadingAnimation.vue';
 import { Album } from '@/store/albums/types';
 
 @Component({
     components: {
         AlbumDisplay,
         AlbumFilters,
+        LoadingAnimation,
     },
 })
 export default class AlbumGallery extends Vue {

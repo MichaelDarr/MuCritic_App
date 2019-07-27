@@ -137,6 +137,7 @@ export default class AlbumFilters extends Vue {
     display: flex;
     flex-direction: column;
     margin: 2em 0 1em 0;
+    text-align: left;
 }
 
 .select {

@@ -10,7 +10,7 @@ export const state: AlbumsState = {
     filteredAlbums: [],
     sortOrder: 'Love',
     reception: 'All',
-    releaseDecade: 'All',
+    releaseDecade: 'New',
     popularity: 'All',
 };
 

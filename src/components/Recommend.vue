@@ -53,7 +53,11 @@ export enum LearningStatus {
 export default class Recommend extends Vue {
     albums: Album[] = [];
 
+    albumsOnPage: number = 0;
+
     'bucket': TimeRangeBucket;
+
+    loadingMoreAlbums: boolean = true;
 
     status: LearningStatus = LearningStatus.loadAlbums;
 
@@ -90,27 +94,24 @@ export default class Recommend extends Vue {
                             'artists/learnTaste',
                         );
                         break;
-                    case 'albums/setScores':
-                        this.status = LearningStatus.loadSpotifyAlbums;
-                        this.$store.commit(
-                            'albums/sort',
+                    case 'albums/setSpotifyInfo': {
+                        const filteredAlbums = this.$store.getters['albums/filteredAlbums'];
+                        this.albums = this.albums.concat(
+                            filteredAlbums.slice(this.albumsOnPage, this.albumsOnPage + 20),
                         );
-                        this.$store.dispatch(
-                            'spotify/requestAlbums',
-                            {
-                                start: 0,
-                                count: 20,
-                            },
-                        );
-                        break;
-                    case 'albums/setSpotifyInfo':
+                        this.albumsOnPage += 20;
                         this.status = LearningStatus.complete;
+                        this.loadingMoreAlbums = false;
                         break;
+                    }
                     case 'albums/setPopularity':
                     case 'albums/setReleaseDecade':
                     case 'albums/setReception':
+                    case 'albums/setScores':
                     case 'albums/setSortOrder':
                         this.status = LearningStatus.loadSpotifyAlbums;
+                        this.albums = [];
+                        this.albumsOnPage = 0;
                         this.$store.commit(
                             'albums/sort',
                         );
@@ -132,12 +133,27 @@ export default class Recommend extends Vue {
             },
         );
 
-        this.$store.watch(
-            (_, getters) => getters['albums/filteredAlbums'],
-            (newAlbums: Album[]) => {
-                this.albums = newAlbums.slice(0, 20);
-            },
+        window.onscroll = this.scroll;
+    }
+
+    scroll() {
+        const loadingElement: HTMLElement | null = document.querySelector(
+            '.loading-more-albums-animation',
         );
+        if(loadingElement == null || this.loadingMoreAlbums) return;
+
+        const windowPos = window.pageYOffset + window.innerHeight;
+        const loadingPos = loadingElement.offsetTop - 500;
+        if(windowPos >= loadingPos) {
+            this.loadingMoreAlbums = true;
+            this.$store.dispatch(
+                'spotify/requestAlbums',
+                {
+                    start: this.albumsOnPage,
+                    count: 20,
+                },
+            );
+        }
     }
 }
 
