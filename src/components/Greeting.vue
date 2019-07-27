@@ -3,6 +3,9 @@
         <h1>
             <i>μ</i>Critic
         </h1>
+        <p class="credit-line">
+            by Michael Darr
+        </p>
         <h2 class="subheadding">
             <span class="sub-1">
                 learning your music taste with
@@ -30,6 +33,11 @@ h1 {
 
 i {
     color: #52baff;
+}
+
+.credit-line {
+    font-size: 1.1em;
+    margin: -1em 0 0 0;
 }
 
 .subheadding {

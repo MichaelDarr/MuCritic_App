@@ -150,7 +150,7 @@ export default class AlbumFilters extends Vue {
 }
 
 .select {
-    background: url(https://michaeldarr.github.io/mucritic-web/select_arrow_right_blue.png) no-repeat 96% 0;
+    background: url(https://michaeldarr.github.io/MuCritic_App/select_arrow_right_blue.png) no-repeat 96% 0;
     height: 2em;
     overflow: hidden;
     width: 85px;
@@ -162,7 +162,7 @@ export default class AlbumFilters extends Vue {
 }
 
 .select:hover {
-    background: url(https://michaeldarr.github.io/mucritic-web/select_arrow_down_blue.png) no-repeat 96% 0;
+    background: url(https://michaeldarr.github.io/MuCritic_App/select_arrow_down_blue.png) no-repeat 96% 0;
 }
 
 label {
