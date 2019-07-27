@@ -15,7 +15,7 @@
             Get in Touch
         </router-link>
         <span class="spacer" />
-        <a href="https://github.com/MichaelDarr/MuCritic-2.0">Source Code</a>
+        <a href="https://github.com/MichaelDarr/MuCritic">Source Code</a>
     </div>
 </template>
 
