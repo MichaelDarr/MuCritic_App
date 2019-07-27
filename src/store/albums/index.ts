@@ -8,6 +8,7 @@ import { getters } from './getters';
 export const state: AlbumsState = {
     albums: [],
     sortOrder: 'Love',
+    reception: 'All',
 };
 
 const namespaced = true;

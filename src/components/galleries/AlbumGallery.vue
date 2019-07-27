@@ -1,6 +1,7 @@
 <template>
     <div class="albums">
-        <AlbumOrder />
+        <h1>Recommendations</h1>
+        <AlbumFilters />
         <div class="album-display-container">
             <AlbumDisplay
                 v-for="album in albums"
@@ -15,13 +16,13 @@
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import AlbumDisplay from '@/components/galleries/AlbumDisplay.vue';
-import AlbumOrder from '@/components/filters/AlbumOrder.vue';
+import AlbumFilters from '@/components/filters/AlbumFilters.vue';
 import { Album } from '@/store/albums/types';
 
 @Component({
     components: {
         AlbumDisplay,
-        AlbumOrder,
+        AlbumFilters,
     },
 })
 export default class AlbumGallery extends Vue {
@@ -34,7 +35,7 @@ export default class AlbumGallery extends Vue {
 <style scoped>
 .albums {
     width: 100%;
-    margin: 0;
+    margin: 3em 0 0 0;
     padding: 0;
 }
 

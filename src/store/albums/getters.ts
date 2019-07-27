@@ -2,6 +2,7 @@ import { GetterTree } from 'vuex';
 import {
     Album,
     AlbumsState,
+    Reception,
     SortOrder,
 } from './types';
 import { RootState } from '../types';
@@ -10,6 +11,9 @@ import { RootState } from '../types';
 export const getters: GetterTree<AlbumsState, RootState> = {
     albums(state): Album[] {
         return state.albums;
+    },
+    reception(state): Reception {
+        return state.reception;
     },
     sortOrder(state): SortOrder {
         return state.sortOrder;

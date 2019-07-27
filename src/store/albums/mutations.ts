@@ -3,19 +3,29 @@ import * as Spotify from 'spotify';
 import {
     Album,
     AlbumsState,
+    Reception,
     SortOrder,
 } from './types';
 
 function ratingTaste(
-    u: {
-        userScore: number | null;
-        userScoreAdjusted: number | null;
-    },
-    threshold?: number,
+    u: Album,
+    reception?: Reception,
 ): number {
     if(u.userScoreAdjusted == null || u.userScore == null) return -1;
-    if(threshold != null && u.userScore < threshold) return -1;
-    return (Math.sqrt(u.userScore) / 35) + u.userScoreAdjusted;
+    const score = (Math.sqrt(u.userScore) / 40) + u.userScoreAdjusted;
+    switch(reception) {
+        case 'Respected':
+            if(u.rymRating < 4) return score - 10;
+            break;
+        case 'Average':
+            if(u.rymRating > 4 || u.rymRating < 2) return score - 10;
+            break;
+        case 'Panned':
+            if(u.rymRating > 2) return score - 10;
+            break;
+        default:
+    }
+    return score;
 }
 
 export const mutations: MutationTree<AlbumsState> = {
@@ -32,6 +42,9 @@ export const mutations: MutationTree<AlbumsState> = {
         payload.scoresAdjusted.forEach((score, i): void => {
             state.albums[i].userScoreAdjusted = score;
         });
+    },
+    setReception(state, payload: Reception): void {
+        state.reception = payload;
     },
     setSortOrder(state, payload: SortOrder): void {
         state.sortOrder = payload;
@@ -60,30 +73,13 @@ export const mutations: MutationTree<AlbumsState> = {
         });
     },
     sort(state): void {
-        if(state.sortOrder === 'Acclaim') {
-            const highArr: Album[] = [];
-            const lowArr: Album[] = [];
-            state.albums.forEach((album): void => {
-                if(album.userScore != null && album.userScore > 7) highArr.push(album);
-                else lowArr.push(album);
-            });
-            highArr.sort((a, b): number => {
-                if(b.userScoreAdjusted == null || a.userScoreAdjusted == null) return -1;
-                return b.userScoreAdjusted - a.userScoreAdjusted;
-            });
-            lowArr.sort((a, b): number => {
-                if(b.userScoreAdjusted == null || a.userScoreAdjusted == null) return -1;
-                return b.userScoreAdjusted - a.userScoreAdjusted;
-            });
-            state.albums = highArr.concat(lowArr);
-            return;
-        }
+        const { reception } = state;
         state.albums.sort((a, b): number => {
             switch(state.sortOrder) {
                 case 'Hate':
-                    return ratingTaste(a) - ratingTaste(b);
+                    return ratingTaste(a, reception) - ratingTaste(b, reception);
                 default:
-                    return ratingTaste(b) - ratingTaste(a);
+                    return ratingTaste(b, reception) - ratingTaste(a, reception);
             }
         });
     },

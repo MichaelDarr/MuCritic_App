@@ -31,8 +31,8 @@ export enum LearningStatus {
     loadAlbums = 'importing ~30,000 albums',
     encodeArtists = 'learning artist representations',
     learnTaste = 'learning your taste',
-    rateAlbums = 'testing your taste on ~30,000 albums',
-    loadSpotifyAlbums = 'importing data for top rated albums',
+    rateAlbums = 'calculating your album scores',
+    loadSpotifyAlbums = 'importing data for top albums',
     sortAlbums = 'sorting albums',
     complete = 'completed',
 }
@@ -107,6 +107,19 @@ export default class Recommend extends Vue {
                         this.status = LearningStatus.complete;
                         break;
                     case 'albums/setSortOrder':
+                        this.status = LearningStatus.loadSpotifyAlbums;
+                        this.$store.commit(
+                            'albums/sort',
+                        );
+                        this.$store.dispatch(
+                            'spotify/requestAlbums',
+                            {
+                                start: 0,
+                                count: 20,
+                            },
+                        );
+                        break;
+                    case 'albums/setReception':
                         this.status = LearningStatus.loadSpotifyAlbums;
                         this.$store.commit(
                             'albums/sort',

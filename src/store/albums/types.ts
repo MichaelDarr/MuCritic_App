@@ -1,6 +1,7 @@
 export interface AlbumsState {
     albums: Album[];
     sortOrder: SortOrder;
+    reception: Reception;
 }
 
 export interface Album {
@@ -45,4 +46,9 @@ export type EncodedAlbum = [
 export type SortOrder =
     | 'Love'
     | 'Hate'
-    | 'Acclaim'
+
+export type Reception =
+    | 'All'
+    | 'Respected'
+    | 'Average'
+    | 'Panned'

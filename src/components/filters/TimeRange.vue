@@ -1,7 +1,7 @@
 <template>
     <div class="select-label-pair">
         <label for="time-period">
-            Learning Taste From Your Favorite Artists of
+            Learning From Your Favorite Artists of
         </label>
         <div class="select">
             <select
@@ -41,8 +41,14 @@ export default class TimeRange extends Vue {
 .select-label-pair {
     align-items: baseline;
     display: inline-flex;
-    flex-direction: row;
+    flex-direction: column;
     margin: 0.5em 0 1em 0;
+}
+
+@media (min-width: 500px) {
+    .select-label-pair {
+        flex-direction: row;
+    }
 }
 
 .select {

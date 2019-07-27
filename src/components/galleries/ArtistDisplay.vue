@@ -33,15 +33,15 @@ export default class ArtistDisplay extends Vue {
 <style scoped>
 .artist-container-outer {
     flex-basis: 33.3%;
-    font-size: 1.1em;
+    font-size: 0.8em;
     margin: 0;
     overflow: hidden;
 }
 
 @media (min-width: 650px) {
     .artist-container-outer {
-        flex-basis: 20%;
         font-size: 0.9em;
+        flex-basis: 20%;
     }
 }
 
