@@ -10,12 +10,11 @@ import { RootState } from '../types';
 
 
 export const actions: ActionTree<AlbumsState, RootState> = {
-    async fetch({ commit }): Promise<void> {
+    async fetch({ commit, state }): Promise<void> {
         const csvRaw: string = await new Promise((resolve, reject): void => {
-            const url = 'https://michaeldarr.github.io/MuCritic_App/album_data.csv';
             request(
-                url,
-                (error, response, body): void => {
+                state.albumFile,
+                (error, _, body): void => {
                     if(error != null) {
                         reject(new Error(`album data failed to load: ${error}`));
                     } else {
@@ -26,7 +25,7 @@ export const actions: ActionTree<AlbumsState, RootState> = {
         });
         const csvRows = csvRaw.split('\n');
         csvRows.shift();
-        let albums = csvRows.map((csvRow): Album => {
+        const albums = csvRows.map((csvRow): Album => {
             const rowData = csvRow.split(',');
             return {
                 spotifyId: rowData[0],
@@ -65,7 +64,6 @@ export const actions: ActionTree<AlbumsState, RootState> = {
                 artist: null,
             };
         });
-        albums = albums.filter((album): boolean => album.artistDiscographySize < 100);
         commit('setAlbums', albums);
     },
     async rate({

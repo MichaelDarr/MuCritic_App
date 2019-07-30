@@ -59,6 +59,8 @@ export default class Recommend extends Vue {
 
     loadingMoreAlbums: boolean = true;
 
+    switchedAlbumFiles: boolean = false;
+
     status: LearningStatus = LearningStatus.loadAlbums;
 
     get loading(): boolean {
@@ -94,6 +96,10 @@ export default class Recommend extends Vue {
                             'artists/learnTaste',
                         );
                         break;
+                    case 'albums/setAlbumFile':
+                        this.switchedAlbumFiles = true;
+                        this.$store.dispatch('albums/fetch');
+                        break;
                     case 'albums/setSpotifyInfo': {
                         const filteredAlbums = this.$store.getters['albums/filteredAlbums'];
                         this.albums = this.albums.concat(
@@ -122,6 +128,12 @@ export default class Recommend extends Vue {
                                 count: 20,
                             },
                         );
+                        break;
+                    case 'albums/setAlbums':
+                        if(!this.switchedAlbumFiles) break;
+                        this.switchedAlbumFiles = false;
+                        this.status = LearningStatus.rateAlbums;
+                        this.$store.dispatch('albums/rate');
                         break;
                     case 'setTasteModels':
                         this.status = LearningStatus.rateAlbums;

@@ -1,5 +1,8 @@
 import { Module } from 'vuex';
-import { AlbumsState } from './types';
+import {
+    AlbumFile,
+    AlbumsState,
+} from './types';
 import { RootState } from '../types';
 import { actions } from './actions';
 import { mutations } from './mutations';
@@ -12,6 +15,7 @@ export const state: AlbumsState = {
     reception: 'All',
     releaseDecade: 'All',
     popularity: 'All',
+    albumFile: AlbumFile.noMetal,
 };
 
 const namespaced = true;

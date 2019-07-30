@@ -2,6 +2,7 @@ import { MutationTree } from 'vuex';
 import * as Spotify from 'spotify';
 import {
     Album,
+    AlbumFile,
     AlbumsState,
     Decade,
     Popularity,
@@ -32,6 +33,9 @@ export const mutations: MutationTree<AlbumsState> = {
         payload.scoresAdjusted.forEach((score, i): void => {
             state.albums[i].userScoreAdjusted = score;
         });
+    },
+    setAlbumFile(state, payload: AlbumFile): void {
+        state.albumFile = payload;
     },
     setReception(state, payload: Reception): void {
         state.reception = payload;

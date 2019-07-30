@@ -1,6 +1,7 @@
 import { GetterTree } from 'vuex';
 import {
     Album,
+    AlbumFile,
     AlbumsState,
     Decade,
     Popularity,
@@ -13,6 +14,9 @@ import { RootState } from '../types';
 export const getters: GetterTree<AlbumsState, RootState> = {
     albums(state): Album[] {
         return state.albums;
+    },
+    albumFile(state): AlbumFile {
+        return state.albumFile;
     },
     filteredAlbums(state): Album[] {
         return state.filteredAlbums;

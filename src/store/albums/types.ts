@@ -5,6 +5,7 @@ export interface AlbumsState {
     reception: Reception;
     releaseDecade: Decade;
     popularity: Popularity;
+    albumFile: AlbumFile;
 }
 
 export interface Album {
@@ -45,6 +46,11 @@ export type EncodedAlbum = [
     number,
     number,
 ];
+
+export enum AlbumFile {
+    all = 'https://michaeldarr.github.io/MuCritic_App/album_data.csv',
+    noMetal = 'https://michaeldarr.github.io/MuCritic_App/album_data_no_metal.csv',
+}
 
 export type SortOrder =
     | 'Love'

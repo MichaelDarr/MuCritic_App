@@ -1,6 +1,6 @@
 <template>
     <div class="filter-container">
-        <div class="select-label-pair">
+        <div class="select-label-pair top-three">
             <label for="sort-order">Albums You'll</label>
             <div class="select">
                 <select
@@ -16,7 +16,45 @@
                 </select>
             </div>
         </div>
-        <div class="select-label-pair">
+        <div class="select-label-pair top-three">
+            <label for="popularity">Popularity</label>
+            <div class="select">
+                <select
+                    id="popularity"
+                    v-model="popularity"
+                >
+                    <option value="All">
+                        All
+                    </option>
+                    <option value="Popular">
+                        Popular
+                    </option>
+                    <option value="Average">
+                        Average
+                    </option>
+                    <option value="Niche">
+                        Niche
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="select-label-pair top-three">
+            <label for="excluded-genre">Excluded Genre</label>
+            <div class="select">
+                <select
+                    id="excluded-genres"
+                    v-model="albumFile"
+                >
+                    <option :value="albumFileAll">
+                        None
+                    </option>
+                    <option :value="albumFileNoMetal">
+                        Metal
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="select-label-pair bottom-two">
             <label for="critical-reception">Critical Reception</label>
             <div class="select">
                 <select
@@ -38,7 +76,7 @@
                 </select>
             </div>
         </div>
-        <div class="select-label-pair">
+        <div class="select-label-pair bottom-two">
             <label for="release-decade">Release Window</label>
             <div class="select release-decade-select">
                 <select
@@ -61,34 +99,13 @@
                 </select>
             </div>
         </div>
-        <div class="select-label-pair">
-            <label for="popularity">Popularity</label>
-            <div class="select">
-                <select
-                    id="popularity"
-                    v-model="popularity"
-                >
-                    <option value="All">
-                        All
-                    </option>
-                    <option value="Popular">
-                        Popular
-                    </option>
-                    <option value="Average">
-                        Average
-                    </option>
-                    <option value="Niche">
-                        Niche
-                    </option>
-                </select>
-            </div>
-        </div>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
 import {
+    AlbumFile,
     Decade,
     Popularity,
     Reception,
@@ -97,6 +114,8 @@ import {
 
 @Component({})
 export default class AlbumFilters extends Vue {
+    albumFile: AlbumFile = this.$store.getters['albums/albumFile'];
+
     sortOrder: SortOrder = this.$store.getters['albums/sortOrder'];
 
     criticalReception: Reception = this.$store.getters['albums/reception'];
@@ -104,6 +123,10 @@ export default class AlbumFilters extends Vue {
     releaseDecade: Decade = this.$store.getters['albums/releaseDecade'];
 
     popularity: Popularity = this.$store.getters['albums/popularity'];
+
+    albumFileAll = AlbumFile.all;
+
+    albumFileNoMetal = AlbumFile.noMetal;
 
     @Watch('sortOrder')
     sortOrderSelected(sortOrder: SortOrder) {
@@ -124,6 +147,11 @@ export default class AlbumFilters extends Vue {
     popularitySelected(popularity: Popularity) {
         this.$store.commit('albums/setPopularity', popularity);
     }
+
+    @Watch('albumFile')
+    albumFileSelected(albumFile: AlbumFile) {
+        this.$store.commit('albums/setAlbumFile', albumFile);
+    }
 }
 </script>
 
@@ -140,12 +168,25 @@ export default class AlbumFilters extends Vue {
     flex-direction: column;
     margin: 2em 0 1em 0;
     text-align: center;
-    flex-basis: 50%;
+    font-size: 0.7em;
 }
 
-@media (min-width: 750px) {
+.bottom-two {
+    flex-basis: 40%;
+}
+.top-three {
+    flex-basis: 33%;
+}
+
+@media (min-width: 800px) {
+    .bottom-two {
+        flex-basis: 20%;
+    }
+    .top-three {
+        flex-basis: 20%;
+    }
     .select-label-pair {
-        flex-basis: 25%;
+        font-size: 1em;
     }
 }
 
