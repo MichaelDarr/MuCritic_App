@@ -1,7 +1,7 @@
 <template>
     <div class="filter-container">
         <div class="select-label-pair top-three">
-            <label for="sort-order">Albums You'll</label>
+            <label for="sort-order">Music You'll</label>
             <div class="select">
                 <select
                     id="sort-order"
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="select-label-pair top-three">
-            <label for="excluded-genre">Excluded Genre</label>
+            <label for="excluded-genre">Exclude</label>
             <div class="select">
                 <select
                     id="excluded-genres"
@@ -168,11 +168,10 @@ export default class AlbumFilters extends Vue {
     flex-direction: column;
     margin: 2em 0 1em 0;
     text-align: center;
-    font-size: 0.7em;
 }
 
 .bottom-two {
-    flex-basis: 40%;
+    flex-basis: 45%;
 }
 .top-three {
     flex-basis: 33%;
@@ -185,9 +184,10 @@ export default class AlbumFilters extends Vue {
     .top-three {
         flex-basis: 20%;
     }
-    .select-label-pair {
-        font-size: 1em;
-    }
+}
+
+.release-decade-select-inner {
+    width: 155px;
 }
 
 .select {
@@ -198,21 +198,21 @@ export default class AlbumFilters extends Vue {
     margin: 0 auto;
 }
 
-.release-decade-select {
-    width: 145px;
-}
-
 .select:hover {
     background: url(https://michaeldarr.github.io/MuCritic_App/select_arrow_down_blue.png) no-repeat 96% 0;
 }
 
+.release-decade-select {
+    width: 95px;
+}
+
 label {
-    font-size: 1em;
+    font-size: 0.8rem;
 }
 
 select {
     background: transparent;
-    font-size: 1em;
+    font-size: 0.8rem;
     width: 95px;
     color: #52baff;
     border: 0px;
@@ -220,13 +220,18 @@ select {
     margin-left: 2px;
 }
 
-.release-decade-select-inner {
-    width: 155px;
-}
-
 option {
-    font-size: 0.9em;
     background-color: #fff;
     color: #000;
+}
+
+@media (min-width: 420px) {
+    select, label {
+        font-size: 1rem;
+    }
+
+    .release-decade-select {
+        width: 145px;
+    }
 }
 </style>

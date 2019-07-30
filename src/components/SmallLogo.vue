@@ -13,7 +13,7 @@ export default class SmallLogo extends Vue {}
 
 <style scoped>
 h1 {
-    font-size: 2em;
+    font-size: 2rem;
     margin-bottom: 1em;
 }
 

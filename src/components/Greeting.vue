@@ -27,8 +27,8 @@ export default class Greeting extends Vue {}
 
 <style scoped>
 h1 {
-    font-size: 7em;
-    margin: 0.5em 0 0 0;
+    font-size: 4rem;
+    margin: 0;
 }
 
 i {
@@ -36,7 +36,7 @@ i {
 }
 
 .credit-line {
-    font-size: 1.1em;
+    font-size: 1.1rem;
     margin: -1em 0 0 0;
 }
 
@@ -45,10 +45,39 @@ i {
 }
 
 .sub-1 {
-    font-size: 0.9em;
+    font-size: 1rem;
 }
 
 .sub-2 {
-    font-size: 1.3em;
+    font-size: 1.4rem;
+}
+
+@media (min-width: 350px) {
+    h1 {
+        font-size: 5rem;
+    }
+
+    .sub-1 {
+        font-size: 1.1rem;
+    }
+
+    .sub-2 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (min-width: 450px) {
+    h1 {
+        font-size: 7rem;
+        margin: 0.5em 0 0 0;
+    }
+
+    .sub-1 {
+        font-size: 1.4rem;
+    }
+
+    .sub-2 {
+        font-size: 2rem;
+    }
 }
 </style>

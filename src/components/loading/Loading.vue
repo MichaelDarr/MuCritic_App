@@ -27,10 +27,18 @@ export default class Loading extends Vue {
     justify-content: center;
     display: flex;
 }
+
 .status {
     display: inline-flex;
     padding: 0 0 0 1em;
     margin: 0;
     flex: none;
+    font-size: 1.3rem;
+}
+
+@media (min-width: 400px) {
+    .status {
+        font-size: 2rem;
+    }
 }
 </style>

@@ -65,12 +65,12 @@ export default class TimeRange extends Vue {
 }
 
 label {
-    font-size: 1em;
+    font-size: 1rem;
 }
 
 select {
     background: transparent;
-    font-size: 1em;
+    font-size: 1rem;
     width: 190px;
     color: #52baff;
     border: 0px;
@@ -79,7 +79,7 @@ select {
 }
 
 option {
-    font-size: 0.9em;
+    font-size: 0.9rem;
     background-color: #fff;
     color: #000;
 }

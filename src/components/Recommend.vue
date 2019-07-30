@@ -31,8 +31,8 @@ export enum LearningStatus {
     loadAlbums = 'importing albums',
     encodeArtists = 'learning about artists',
     learnTaste = 'learning your taste',
-    rateAlbums = 'calculating your album scores',
-    loadSpotifyAlbums = 'importing your top albums',
+    rateAlbums = 'calculating album scores',
+    loadSpotifyAlbums = 'loading favorite albums',
     sortAlbums = 'sorting albums',
     complete = 'completed',
 }
@@ -173,9 +173,8 @@ export default class Recommend extends Vue {
 
 <style scoped>
 .content {
-    margin: auto;
-    max-width: 860px;
-    padding: 0 20px 20px 20px;
+    width: 100%;
+    padding: 0;
     flex-wrap: wrap;
 }
 </style>

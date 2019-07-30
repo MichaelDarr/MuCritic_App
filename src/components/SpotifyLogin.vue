@@ -26,7 +26,7 @@ export default class SpotifyLogin extends Vue {
 
 <style scoped>
 h2 {
-    font-size: 1.8em;
+    font-size: 1.8rem;
     margin-bottom: 0.6em;
 }
 

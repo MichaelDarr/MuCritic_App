@@ -21,7 +21,11 @@ export default class App extends Vue {
 </script>
 
 <style>
-html, body, #app {
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
     background-color: #1b1b1b;
 }
 #app {
@@ -30,5 +34,10 @@ html, body, #app {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #fff;
+    margin: auto;
+    max-width: 860px;
+    padding: 2rem 1rem 3rem 1rem;
+    min-height: 100vh;
+    background-color: #1b1b1b;
 }
 </style>
