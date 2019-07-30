@@ -26,7 +26,7 @@ export const actions: ActionTree<AlbumsState, RootState> = {
         });
         const csvRows = csvRaw.split('\n');
         csvRows.shift();
-        const albums = csvRows.map((csvRow): Album => {
+        let albums = csvRows.map((csvRow): Album => {
             const rowData = csvRow.split(',');
             return {
                 spotifyId: rowData[0],
@@ -65,6 +65,7 @@ export const actions: ActionTree<AlbumsState, RootState> = {
                 artist: null,
             };
         });
+        albums = albums.filter((album): boolean => album.artistDiscographySize < 100);
         commit('setAlbums', albums);
     },
     async rate({
