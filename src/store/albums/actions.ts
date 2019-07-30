@@ -30,14 +30,8 @@ export const actions: ActionTree<AlbumsState, RootState> = {
             return {
                 spotifyId: rowData[0],
                 popularity: Number(rowData[1]),
-                rymOverallRank: Number(rowData[2]),
                 rymRating: Number(rowData[3]),
-                rymRatingCount: Number(rowData[4]),
                 releaseYear: Number(rowData[5]),
-                artistActive: Number(rowData[6]),
-                artistDiscographySize: Number(rowData[7]),
-                artistMemberCount: Number(rowData[8]),
-                artistPopularity: Number(rowData[9]),
                 encoding: [
                     Number(rowData[10]),
                     Number(rowData[11]),

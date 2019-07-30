@@ -11,14 +11,8 @@ export interface AlbumsState {
 export interface Album {
     spotifyId: string;
     popularity: number;
-    rymOverallRank: number;
     rymRating: number;
-    rymRatingCount: number;
     releaseYear: number;
-    artistActive: number;
-    artistDiscographySize: number;
-    artistMemberCount: number;
-    artistPopularity: number;
     encoding: EncodedAlbum;
     userScore: number | null;
     userScoreAdjusted: number | null;

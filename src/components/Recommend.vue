@@ -28,11 +28,11 @@ import { TimeRangeBucket } from '@/store/artists/types';
 const { mapState } = createNamespacedHelpers('artists');
 
 export enum LearningStatus {
-    loadAlbums = 'importing ~30,000 albums',
-    encodeArtists = 'learning artist representations',
+    loadAlbums = 'importing albums',
+    encodeArtists = 'learning about artists',
     learnTaste = 'learning your taste',
     rateAlbums = 'calculating your album scores',
-    loadSpotifyAlbums = 'importing data for top albums',
+    loadSpotifyAlbums = 'importing your top albums',
     sortAlbums = 'sorting albums',
     complete = 'completed',
 }

@@ -24,20 +24,6 @@ const store: StoreOptions<RootState> = {
         artists,
         spotify,
     },
-    getters: {
-        tasteRaw(state): any {
-            if(state.tasteModel != null) {
-                return state.tasteModel.getLayer('perceptron').weights[0].read().arraySync();
-            }
-            return null;
-        },
-        tasteAdjustedRaw(state): any {
-            if(state.tasteModelAdjusted != null) {
-                return state.tasteModelAdjusted.getLayer('perceptron').weights[0].read().arraySync();
-            }
-            return null;
-        },
-    },
     mutations: {
         logError(state, payload: Log): void {
             state.errorLog.push(payload);
