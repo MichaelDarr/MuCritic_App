@@ -8,6 +8,10 @@ export const getters: GetterTree<SpotifyState, RootState> = {
     api(state): SpotifyApi | null {
         return state.api;
     },
+    apiIsActive(state): boolean {
+        if(state.api == null) return false;
+        return !state.api.isExpired();
+    },
     authUrl(state): string {
         let urlBuilder = state.baseUrl;
         urlBuilder += `?client_id=${state.clientId}`;

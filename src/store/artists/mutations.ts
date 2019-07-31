@@ -8,6 +8,12 @@ import {
 import { EncodedArtist } from '../../helpers/encode';
 
 export const mutations: MutationTree<ArtistsState> = {
+    reset(state): void {
+        state.short = [];
+        state.medium = [];
+        state.long = [];
+        state.bucket = 'medium';
+    },
     setArtists(
         state,
         payload: {

@@ -59,6 +59,10 @@ export class SpotifyApi {
         this.expirationTimestamp = Date.now() + (expiresIn * 1000);
     }
 
+    public isExpired(): boolean {
+        return Date.now() >= this.expirationTimestamp;
+    }
+
     /**
      * [Get an Album's Tracks](https://developer.spotify.com/documentation/web-api/reference/albums/get-albums-tracks/)
      */
@@ -150,7 +154,7 @@ export class SpotifyApi {
         url: string,
         method: Spotify.RequestMethod,
     ): Promise<T> {
-        if(Date.now() > this.expirationTimestamp) throw new Error('Spotify Token Expired');
+        if(this.isExpired()) throw new Error('Spotify Token Expired');
         return new Promise((resolve, reject): void => {
             const requestOptions = {
                 url,

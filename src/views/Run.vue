@@ -1,5 +1,5 @@
 <template>
-  <div v-if="apiIsLoaded">
+  <div v-if="apiIsActive">
     <Recommend />
   </div>
   <div v-else>
@@ -15,7 +15,7 @@ import Greeting from '@/components/Greeting.vue';
 import Recommend from '@/components/Recommend.vue';
 import SpotifyLogin from '@/components/SpotifyLogin.vue';
 
-const { mapState } = createNamespacedHelpers('spotify');
+const { mapGetters } = createNamespacedHelpers('spotify');
 
 @Component({
     components: {
@@ -24,16 +24,12 @@ const { mapState } = createNamespacedHelpers('spotify');
         SpotifyLogin,
     },
     computed: {
-        ...mapState([
-            'api',
+        ...mapGetters([
+            'apiIsActive',
         ]),
     },
 })
 export default class Run extends Vue {
-    private 'api': string;
-
-    get apiIsLoaded(): boolean {
-        return this.api != null;
-    }
+    private 'apiIsActive': boolean;
 }
 </script>

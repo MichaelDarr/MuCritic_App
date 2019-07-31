@@ -16,6 +16,16 @@ function ratingTaste(u: Album): number {
 }
 
 export const mutations: MutationTree<AlbumsState> = {
+    reset(state): void {
+        state.albums = [];
+        state.filteredAlbums = [];
+        state.filteredAlbums = [];
+        state.sortOrder = 'Love';
+        state.reception = 'All';
+        state.releaseDecade = 'All';
+        state.popularity = 'All';
+        state.albumFile = AlbumFile.noMetal;
+    },
     setAlbums(state, payload: Album[]): void {
         state.albums = payload;
         state.filteredAlbums = payload;

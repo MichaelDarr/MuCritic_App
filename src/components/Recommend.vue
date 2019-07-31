@@ -68,6 +68,10 @@ export default class Recommend extends Vue {
     }
 
     mounted() {
+        this.$store.commit('reset');
+        this.$store.commit('albums/reset');
+        this.$store.commit('artists/reset');
+
         this.$store.dispatch('albums/fetch');
 
         this.$store.dispatch('spotify/requestArtists', 'short');

@@ -31,6 +31,12 @@ const store: StoreOptions<RootState> = {
         logMisc(state, payload: Log): void {
             state.miscLog.push(payload);
         },
+        reset(state): void {
+            state.errorLog = [];
+            state.miscLog = [];
+            state.tasteModel = null;
+            state.tasteModelAdjusted = null;
+        },
         setTasteModels(state, payload: {
             model: Sequential;
             adjustedModel: Sequential;
