@@ -12,7 +12,7 @@
                 At the heart of μCritic is an enormous quantity of data scraped from <a href="https://rateyourmusic.com/">Rate Your Music</a>, a website where passionate amateur music critics rate albums on a scale of 0 - 5. μCritic has analyzed hundreds of thousands of album reviews, learning the unique music tastes belonging to hundreds of Rate Your Music users. Then, it explored the relationship between the music tastes and favorite artists of each user.
             </p>
             <p>
-                To recommend albums for new users, μCritic reverses this process. When a user logs in with Spotify, their 5 favorite artists are fed into the system. μCritic uses these artists to construct of the user’s music taste, as if they were a critic from Rate Your Music. This taste is applied to a large set of albums, generating a numeric rating for each. The albums are sorted according to these ratings, and presented as recommendations.
+                To recommend albums for new users, μCritic reverses this process. When a user logs in with Spotify, their 5 favorite artists are fed into the system. μCritic uses these artists to construct the user’s music taste, as if they were a critic from Rate Your Music. This taste is applied to a large set of albums, generating a numeric rating for each. The albums are sorted according to these ratings, and presented as recommendations.
             </p>
             <hr>
             <h1 class="about-header">
@@ -29,7 +29,7 @@
                 Dataset
             </h1>
             <p>
-                μCritic is built on a fully custom dataset aggregated specifically for the project. A custom web scraper was built to crawl Rate Your Music and save the highly relational music data into a local database. Spotify IDs for each of the scraped albums/artists were mapped via the <a href="https://developer.spotify.com/documentation/web-api/reference/search/search/">Spotify API search endpoint</a> and used for further data retrieval. The final training dataset consists of roughly
+                μCritic is built on a new dataset aggregated specifically for the project. A custom web scraper was built to crawl Rate Your Music and save relational music data into a local database. Spotify IDs for each of the scraped albums/artists were mapped via the <a href="https://developer.spotify.com/documentation/web-api/reference/search/search/">Spotify API search endpoint</a> and used for further data retrieval. The final training dataset consists of roughly
                 <ul>
                     <li>250 users</li>
                     <li>40,000 artists</li>
@@ -148,17 +148,14 @@
                 </ul>
             </p>
             <h2>
-                <a href="https://michaeldarr.github.io/MuCritic_App/">Web App</a>
+                Web App
             </h2>
             <p>
                 <ul>
                     <li>Language: Typescript</li>
-                    <li>Frameworks</li>
-                    <ul>
-                        <li>Vue.js</li>
-                        <li>Vuex</li>
-                        <li>Tensorflow.js</li>
-                    </ul>
+                    <li>Framework: Vue.js</li>
+                    <li>State Management: Vuex</li>
+                    <li>ML: Tensorflow.js</li>
                     <li>Bundler: webpack</li>
                     <li>Deployment: Github Pages</li>
                 </ul>
