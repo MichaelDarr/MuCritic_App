@@ -64,17 +64,6 @@ export class SpotifyApi {
     }
 
     /**
-     * [Get an Album's Tracks](https://developer.spotify.com/documentation/web-api/reference/albums/get-albums-tracks/)
-     */
-    public async getAlbumTracks(
-        albumId: string,
-        limit = 50,
-    ): Promise<Spotify.TracksResponse> {
-        const url = `https://api.spotify.com/v1/albums/${albumId}/tracks?limit=${limit}`;
-        return this.spotifyRequest<Spotify.TracksResponse>(url, 'GET');
-    }
-
-    /**
      * [Get an Artist](https://developer.spotify.com/documentation/web-api/reference/artists/get-artist/)
      */
     public async getArtist(artistId: string): Promise<Spotify.ArtistResponse> {
@@ -107,22 +96,6 @@ export class SpotifyApi {
         const idString = (Array.isArray(ids)) ? ids.join(',') : ids;
         const url = `https://api.spotify.com/v1/${batchName}?ids=${idString}`;
         return this.spotifyRequest<T>(url, 'GET');
-    }
-
-    /**
-     * [Get Available Genre Seeds](https://developer.spotify.com/console/get-available-genre-seeds/)
-     */
-    public async getGenreSeeds(): Promise<Spotify.GenreSeedsResponse> {
-        const url = 'https://api.spotify.com/v1/recommendations/available-genre-seeds';
-        return this.spotifyRequest<Spotify.GenreSeedsResponse>(url, 'GET');
-    }
-
-    /**
-     * [Get Audio Features for a Track](https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/)
-     */
-    public async getTrackAudioFeatures(trackId: string): Promise<Spotify.AudioFeatureResponse> {
-        const url = `https://api.spotify.com/v1/audio-features/${trackId}`;
-        return this.spotifyRequest<Spotify.AudioFeatureResponse>(url, 'GET');
     }
 
     /**
