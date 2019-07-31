@@ -63,8 +63,14 @@ export default class Recommend extends Vue {
 
     status: LearningStatus = LearningStatus.loadAlbums;
 
+    unsubscribe: () => void = (() => {});
+
     get loading(): boolean {
         return this.status !== LearningStatus.complete;
+    }
+
+    destroyed() {
+        this.unsubscribe();
     }
 
     mounted() {
@@ -78,7 +84,7 @@ export default class Recommend extends Vue {
         this.$store.dispatch('spotify/requestArtists', 'medium');
         this.$store.dispatch('spotify/requestArtists', 'long');
 
-        this.$store.subscribe(
+        this.unsubscribe = this.$store.subscribe(
             (mutation) => {
                 switch (mutation.type) {
                     case 'artists/setArtists':
