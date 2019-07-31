@@ -1,4 +1,4 @@
-# MuCritic Web App
+# μCritic Web App
 ## Album Recommendation Using [μCritic](https://github.com/MichaelDarr/MuCritic/)
 ## Deployed With [Github Pages](https://michaeldarr.github.io/MuCritic_App/)
 ## Tooling
