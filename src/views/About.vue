@@ -2,7 +2,7 @@
     <div class="about">
         <SmallLogo />
         <div class="about-content">
-            <h1>
+            <h1 class="about-header">
                 Approach
             </h1>
             <p>
@@ -15,7 +15,7 @@
                 To recommend albums for new users, μCritic reverses this process. When a user logs in with Spotify, their 5 favorite artists are fed into the system. μCritic uses these artists to construct of the user’s music taste, as if they were a critic from Rate Your Music. This taste is applied to a large set of albums, generating a numeric rating for each. The albums are sorted according to these ratings, and presented as recommendations.
             </p>
             <hr>
-            <h1>
+            <h1 class="about-header">
                 Source Code
             </h1>
             <h2>
@@ -25,7 +25,7 @@
                 <a href="https://github.com/MichaelDarr/MuCritic_App">Web App</a>
             </h2>
             <hr>
-            <h1>
+            <h1 class="about-header">
                 Dataset
             </h1>
             <p>
@@ -41,9 +41,12 @@
                 *The legality of web scraping has been repeatedly upheld in court. Furthermore, μCritic's use of the data falls under fair use.
             </p>
             <hr>
-            <h1>
-                Models - <a href="https://i.imgur.com/wHM4wJa.jpg">master diagram</a>
+            <h1 class="about-header">
+                Models
             </h1>
+            <p class="subheading-link">
+                <a href="https://i.imgur.com/wHM4wJa.jpg">master diagram</a>
+            </p>
             <h2>
                 Model 1 - <a href="https://i.imgur.com/JMjUQoZ.jpg">diagram</a>
             </h2>
@@ -110,7 +113,7 @@
                 *Testing and validation datasets withheld for all models during training. For metric integrity, models have not yet been evaluated using test sets, and will not be until μCritic has a stable release. Validation sets were used during training to fine-tune hyperparameters.
             </p>
             <hr>
-            <h1>
+            <h1 class="about-header">
                 Tooling
             </h1>
             <h2>
@@ -190,8 +193,12 @@ export default class Recommend extends Vue {}
     font-size: 1rem;
 }
 
-h1 {
+.about-header {
     text-transform: uppercase;
+}
+
+.subheading-link {
+    margin-top: -1em;
 }
 
 p {
