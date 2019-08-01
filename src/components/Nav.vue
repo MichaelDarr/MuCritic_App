@@ -4,7 +4,7 @@
             Learn Your Taste
         </router-link>
         <router-link to="/about">
-            How it Works
+            About The Model
         </router-link>
         <a href="https://michaeldarr.github.io/#/contact">Get In Touch</a>
         <a href="https://github.com/MichaelDarr/MuCritic">Source Code</a>

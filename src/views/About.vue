@@ -2,7 +2,10 @@
     <div class="about">
         <SmallLogo />
         <div class="about-content">
-            <h1 class="about-header">
+            <h1
+                id="approach"
+                class="about-header"
+            >
                 Approach
             </h1>
             <p>
@@ -16,22 +19,12 @@
             </p>
             <hr>
             <h1 class="about-header">
-                Source Code
-            </h1>
-            <h2>
-                <a href="https://github.com/MichaelDarr/MuCritic">Data &amp; Model</a>
-            </h2>
-            <h2>
-                <a href="https://github.com/MichaelDarr/MuCritic_App">Web App</a>
-            </h2>
-            <hr>
-            <h1 class="about-header">
                 Dataset
             </h1>
             <p>
                 μCritic is built on a new dataset aggregated specifically for the project. A custom web scraper was built to crawl Rate Your Music and save relational music data into a local database. Spotify IDs for each of the scraped albums/artists were mapped via the <a href="https://developer.spotify.com/documentation/web-api/reference/search/search/">Spotify API search endpoint</a> and used for further data retrieval. The final training dataset consists of roughly
                 <ul>
-                    <li>250 users</li>
+                    <li>200 users</li>
                     <li>40,000 artists</li>
                     <li>150,000 albums</li>
                     <li>300,000 user reviews</li>
@@ -41,8 +34,36 @@
                 *The legality of web scraping has been repeatedly upheld in court. Furthermore, μCritic's use of the data falls under fair use.
             </p>
             <hr>
-            <h1 class="about-header">
-                Models
+            <h1
+                id="limitations"
+                class="about-header"
+            >
+                Limitations
+            </h1>
+            <h2>
+                Dataset
+            </h2>
+            <p>
+                The model is severely handicapped by the small number of analyzed critics (202). While scraping RYM, only users with at least 5 "favorite artist" entries and 10 albums reviews were collected. The artist requirement disqualified hundreds of prolific userful reviewers from the dataset. In a future version of μCritic, it may be useful to infer a user's favorite artists from their reviews (if not already explicitly listed in the user's profile). This would increase training set size and possibly result in better, more diverse results.
+            </p>
+            <h2>
+                User Expectations
+            </h2>
+            <p>
+                The paradigm of μCritic's album recommendation system is fundamentally at odds with user expectations. Unlike other music recommendation systems, μCritic does not attempt to produce results similar to music that a user already enjoys. Instead, it is an <em>aspirational</em> recommendation system, generalizing a user's favorite artists to music as a whole.
+            </p>
+            <h2>
+                Accessibility
+            </h2>
+            <p>
+                Music reviewers are very intentional about their music taste. These individuals generally listen to large bodies of work and grow to enjoy music that can be harsh, abrasive, or just plain boring to many audiences. Such albums can attain widespread critical praise while remaining downright unpleasant to the average listener. Some examples of such music include <a href="https://rateyourmusic.com/release/album/my-bloody-valentine/loveless/">Loveless</a> and <a href="https://rateyourmusic.com/release/album/godspeed-you-black-emperor/lift-yr-skinny-fists-like-antennas-to-heaven/">Lift Yr. Skinny Fists Like Antennas to Heaven!</a>, both of which land within the top 15 highest-rated albums of all time on RYM. By recommending albums with universal acclaim but low accessibility, μCritic is likely to alienate many users.
+            </p>
+            <hr>
+            <h1
+                id="neural-network"
+                class="about-header"
+            >
+                Neural Network
             </h1>
             <p class="subheading-link">
                 <a href="https://i.imgur.com/wHM4wJa.jpg">master diagram</a>
@@ -95,7 +116,7 @@
             <p>
                 <ul>
                     <li>Type: Recurrent Autoencoder</li>
-                    <li>Input: 5 Ouputs of <b>Model 2</b></li>
+                    <li>Input: 5 Outputs of <b>Model 2</b></li>
                     <li>Output: Latent Artist Representations</li>
                 </ul>
             </p>
@@ -113,7 +134,10 @@
                 *Testing and validation datasets withheld for all models during training. For metric integrity, models have not yet been evaluated using test sets, and will not be until μCritic has a stable release. Validation sets were used during training to fine-tune hyperparameters.
             </p>
             <hr>
-            <h1 class="about-header">
+            <h1
+                id="tooling"
+                class="about-header"
+            >
                 Tooling
             </h1>
             <h2>
@@ -160,6 +184,19 @@
                     <li>Deployment: Github Pages</li>
                 </ul>
             </p>
+            <hr>
+            <h1
+                id="repositories"
+                class="about-header"
+            >
+                Repositories
+            </h1>
+            <h2>
+                <a href="https://github.com/MichaelDarr/MuCritic">Data &amp; Model</a>
+            </h2>
+            <h2>
+                <a href="https://github.com/MichaelDarr/MuCritic_App">Web App</a>
+            </h2>
         </div>
     </div>
 </template>
@@ -191,7 +228,7 @@ export default class Recommend extends Vue {}
 }
 
 .about-header {
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
 .subheading-link {
